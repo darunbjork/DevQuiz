@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, type ReactNode } from 'react';
 import { toast } from 'react-toastify';
 import type { User, NewQuiz, Quiz, SavedQuizResult, AuthContextType } from '../types';
-import * as storage from '../utils/storage,ts';
+import * as storage from '../utils/storage.ts';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
