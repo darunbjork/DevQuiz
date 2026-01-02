@@ -170,67 +170,69 @@ ${studyNote}`;
       </Card>
 
       {quizQuestions.length > 0 && (
-        <>
-          <Card title="Quiz Details">
-            <div className="form-group">
-              <label className="form-label">Quiz Title</label>
-              <input
-                className="study-input"
-                value={quizTitle}
-                onChange={(e) => setQuizTitle(e.target.value)}
-              />
+  <>
+    <Card title="Quiz Details">
+      <div className="form-group">
+        <label className="form-label">Quiz Title</label>
+        <input
+          className="study-input"
+          value={quizTitle}
+          onChange={(e) => setQuizTitle(e.target.value)}
+          placeholder="Enter a title for your quiz"
+        />
 
-              <label className="form-label">Description</label>
-              <textarea
-                className="study-textarea"
-                rows={2}
-                value={quizDescription}
-                onChange={(e) => setQuizDescription(e.target.value)}
-              />
-            </div>
-          </Card>
+        <label className="form-label">Description</label>
+        <textarea
+          className="study-textarea"
+          rows={2}
+          value={quizDescription}
+          onChange={(e) => setQuizDescription(e.target.value)}
+          placeholder="Enter a description (optional)"
+        />
+      </div>
+    </Card>
 
-          <Card title={`Generated Questions (${quizQuestions.length})`}>
-            <div className="form-group">
-              {quizQuestions.map((q, index) => (
-                <div key={q.id} className="question-card">
-                  <p className="question-title">
-                    Q{index + 1}: {q.question}
-                  </p>
+    <Card title={`Generated Questions (${quizQuestions.length})`}>
+      <div className="form-group">
+        {quizQuestions.map((q, index) => (
+          <div key={q.id} className="question-card">
+            <p className="question-title">
+              Q{index + 1}: {q.question}
+            </p>
 
-                  {q.options.map((option, optIndex) => (
-                    <div
-                      key={optIndex}
-                      className={
-                        optIndex === q.correctAnswer
-                          ? "option-item option-correct"
-                          : "option-item"
-                      }
-                    >
-                      {String.fromCharCode(65 + optIndex)}) {option}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </Card>
-
-          <div className="button-row">
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setQuizQuestions([]);
-                setQuizTitle("");
-                setQuizDescription("");
-              }}
-            >
-              Cancel
-            </Button>
-
-            <Button onClick={handleSaveQuiz}>Save AI Quiz</Button>
+            {q.options.map((option, optIndex) => (
+              <div
+                key={optIndex}
+                className={
+                  optIndex === q.correctAnswer
+                    ? "option-item option-correct"
+                    : "option-item"
+                }
+              >
+                {String.fromCharCode(65 + optIndex)}) {option}
+              </div>
+            ))}
           </div>
-        </>
-      )}
+        ))}
+      </div>
+    </Card>
+
+    <div className="button-row">
+      <Button
+        variant="secondary"
+        onClick={() => {
+          setQuizQuestions([]);
+          setQuizTitle("");
+          setQuizDescription("");
+        }}
+      >
+        Cancel
+      </Button>
+
+      <Button onClick={handleSaveQuiz}>Save AI Quiz</Button>
+    </div>
+  </>
+)}
     </div>
   );
 }
