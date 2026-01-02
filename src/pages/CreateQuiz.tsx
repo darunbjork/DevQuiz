@@ -1,199 +1,185 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useAuth } from '../hooks/useAuth';
-import type { NewQuiz, QuizQuestion } from '../types';
-import Card from '../components/Card';
-import Button from '../components/Button';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAuth } from "../hooks/useAuth";
+import type { NewQuiz, QuizQuestion } from "../types";
+import Card from "../components/Card";
+import Button from "../components/Button";
+import "./CreateQuiz.css";
 
 function CreateQuiz() {
   const [quizData, setQuizData] = useState<NewQuiz>({
-    title: '',
-    description: '',
-    questions: []
+    title: "",
+    description: "",
+    questions: [],
   });
-  
-  const [currentQuestion, setCurrentQuestion] = useState<Omit<QuizQuestion, 'id'>>({
-    question: '',
-    options: ['', '', '', ''],
-    correctAnswer: 0
+
+  const [currentQuestion, setCurrentQuestion] = useState<
+    Omit<QuizQuestion, "id">
+  >({
+    question: "",
+    options: ["", "", "", ""],
+    correctAnswer: 0,
   });
-  
+
   const auth = useAuth();
   const navigate = useNavigate();
 
   const handleAddQuestion = () => {
     if (!currentQuestion.question.trim()) {
-      toast.error('Please enter a question');
+      toast.error("Please enter a question");
       return;
     }
-    
-    if (currentQuestion.options.some(opt => !opt.trim())) {
-      toast.error('Please fill all options');
+
+    if (currentQuestion.options.some((opt) => !opt.trim())) {
+      toast.error("Please fill all options");
       return;
     }
-    
-    setQuizData(prev => ({
+
+    setQuizData((prev) => ({
       ...prev,
-      questions: [
-        ...prev.questions,
-        { ...currentQuestion, id: Date.now() }
-      ]
+      questions: [...prev.questions, { ...currentQuestion, id: Date.now() }],
     }));
-    
-    // Reset current question
+
     setCurrentQuestion({
-      question: '',
-      options: ['', '', '', ''],
-      correctAnswer: 0
+      question: "",
+      options: ["", "", "", ""],
+      correctAnswer: 0,
     });
   };
 
   const handleCreateQuiz = () => {
     if (!quizData.title.trim()) {
-      toast.error('Please enter a quiz title');
+      toast.error("Please enter a quiz title");
       return;
     }
-    
+
     if (!quizData.description.trim()) {
-      toast.error('Please enter a quiz description');
+      toast.error("Please enter a quiz description");
       return;
     }
-    
+
     if (quizData.questions.length === 0) {
-      toast.error('Please add at least one question');
+      toast.error("Please add at least one question");
       return;
     }
-    
+
     auth.addCreatedQuiz(quizData);
-    toast.success('Quiz created successfully!');
-    navigate('/profile');
+    toast.success("Quiz created successfully!");
+    navigate("/profile");
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ fontSize: '28px', marginBottom: '24px' }}>
-        Create New Quiz
-      </h1>
+    <div className="createquiz-container fade-in">
+      <h1 className="createquiz-title">Create New Quiz</h1>
 
-      <Card title="Quiz Details" style={{ marginBottom: '24px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px' }}>Title</label>
-            <input
-              type="text"
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                border: '1px solid #ccc',
-                borderRadius: '4px'
-              }}
-              value={quizData.title}
-              onChange={(e) => setQuizData({...quizData, title: e.target.value})}
-              placeholder="Enter quiz title"
-            />
-            </div>
-          </div>
-          
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px' }}>Description</label>
-            <textarea
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                minHeight: '100px'
-              }}
-              rows={3}
-              value={quizData.description}
-              onChange={(e) => setQuizData({...quizData, description: e.target.value})}
-              placeholder="Enter quiz description"
-            />
-          </div>
+      {/* QUIZ DETAILS */}
+      <Card title="Quiz Details">
+        <div className="form-group">
+          <label className="form-label">Title</label>
+          <input
+            type="text"
+            className="input-field"
+            value={quizData.title}
+            onChange={(e) =>
+              setQuizData({ ...quizData, title: e.target.value })
+            }
+            placeholder="Enter quiz title"
+          />
+
+          <label className="form-label">Description</label>
+          <textarea
+            className="textarea-field"
+            rows={3}
+            value={quizData.description}
+            onChange={(e) =>
+              setQuizData({ ...quizData, description: e.target.value })
+            }
+            placeholder="Enter quiz description"
+          />
+        </div>
       </Card>
 
-      <Card title="Add Question" style={{ marginBottom: '24px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div>
-            <label style={{ display: 'block', marginBottom: '8px' }}>Question</label>
-            <input
-              type="text"
-              style={{
-                width: '100%',
-                padding: '8px 12px',
-                border: '1px solid #ccc',
-                borderRadius: '4px'
-              }}
-              value={currentQuestion.question}
-              onChange={(e) => setCurrentQuestion({...currentQuestion, question: e.target.value})}
-              placeholder="Enter question"
-            />
-          </div>
+      {/* ADD QUESTION */}
+      <Card title="Add Question">
+        <div className="form-group">
+          <label className="form-label">Question</label>
+          <input
+            type="text"
+            className="input-field"
+            value={currentQuestion.question}
+            onChange={(e) =>
+              setCurrentQuestion({
+                ...currentQuestion,
+                question: e.target.value,
+              })
+            }
+            placeholder="Enter question"
+          />
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ display: 'block', marginBottom: '8px' }}>Options</label>
-            {currentQuestion.options.map((option, index) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                <input
-                  type="text"
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px'
-                  }}
-                  value={option}
-                  onChange={(e) => {
-                    const newOptions = [...currentQuestion.options];
-                    newOptions[index] = e.target.value;
-                    setCurrentQuestion({...currentQuestion, options: newOptions});
-                  }}
-                  placeholder={`Option ${index + 1}`}
-                />
-                <input
-                  type="radio"
-                  name="correctAnswer"
-                  checked={currentQuestion.correctAnswer === index}
-                  onChange={() => setCurrentQuestion({...currentQuestion, correctAnswer: index})}
-                  style={{ marginLeft: '12px' }}
-                />
-              </div>
-            ))}
-          </div>
+          <label className="form-label">Options</label>
+          {currentQuestion.options.map((option, index) => (
+            <div key={index} className="option-row">
+              <input
+                type="text"
+                className="input-field"
+                value={option}
+                onChange={(e) => {
+                  const newOptions = [...currentQuestion.options];
+                  newOptions[index] = e.target.value;
+                  setCurrentQuestion({
+                    ...currentQuestion,
+                    options: newOptions,
+                  });
+                }}
+                placeholder={`Option ${index + 1}`}
+              />
+
+              <input
+                type="radio"
+                className="option-radio"
+                name="correctAnswer"
+                checked={currentQuestion.correctAnswer === index}
+                onChange={() =>
+                  setCurrentQuestion({
+                    ...currentQuestion,
+                    correctAnswer: index,
+                  })
+                }
+              />
+            </div>
+          ))}
+
           <Button onClick={handleAddQuestion}>Add Question</Button>
         </div>
       </Card>
 
-      <Card title="Questions Preview" style={{ marginBottom: '24px' }}>
+      {/* PREVIEW */}
+      <Card title="Questions Preview">
         {quizData.questions.length === 0 ? (
-          <p style={{ color: '#888', textAlign: 'center' }}>
+          <p style={{ textAlign: "center", color: "var(--color-text-muted)" }}>
             No questions added yet
           </p>
         ) : (
-          <ul style={{ listStyleType: 'none', padding: 0 }}>
+          <ul className="preview-list">
             {quizData.questions.map((q, index) => (
-              <li 
-                key={index} 
-                style={{ 
-                  borderBottom: '1px solid #eee', 
-                  paddingBottom: '12px',
-                  marginBottom: '12px'
-                }}
-              >
-                <p style={{ fontWeight: 'bold', marginBottom: '4px' }}>
+              <li key={index} className="preview-item">
+                <p className="preview-question">
                   {index + 1}. {q.question}
                 </p>
-                <ul style={{ marginLeft: '20px' }}>
+
+                <ul>
                   {q.options.map((opt, optIndex) => (
-                    <li 
+                    <li
                       key={optIndex}
-                      style={{
-                        color: optIndex === q.correctAnswer ? 'green' : 'inherit',
-                        fontWeight: optIndex === q.correctAnswer ? 'bold' : 'normal'
-                      }}
+                      className={
+                        optIndex === q.correctAnswer
+                          ? "preview-option correct"
+                          : "preview-option"
+                      }
                     >
-                      {optIndex + 1}. {opt} {optIndex === q.correctAnswer && '✓'}
+                      {optIndex + 1}. {opt}{" "}
+                      {optIndex === q.correctAnswer && "✓"}
                     </li>
                   ))}
                 </ul>
@@ -202,24 +188,20 @@ function CreateQuiz() {
           </ul>
         )}
       </Card>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between',
-        marginTop: '24px'
-      }}>
-        <Button 
-          variant="secondary" 
-          onClick={() => navigate('/profile')}
-        >
+
+      {/* BUTTONS */}
+      <div className="createquiz-buttons">
+        <Button variant="secondary" onClick={() => navigate("/profile")}>
           Cancel
         </Button>
-                  <Button 
-                    onClick={handleCreateQuiz}
-                    disabled={quizData.questions.length === 0}
-                  >
-                    Create Quiz ({quizData.questions.length} questions)
-                  </Button>     
-                   </div>
+
+        <Button
+          onClick={handleCreateQuiz}
+          disabled={quizData.questions.length === 0}
+        >
+          Create Quiz ({quizData.questions.length} questions)
+        </Button>
+      </div>
     </div>
   );
 }

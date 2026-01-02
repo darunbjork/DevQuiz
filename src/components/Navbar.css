@@ -1,0 +1,64 @@
+@import "../styles/theme.css";
+@import "../styles/animations.css";
+
+/* NAVBAR CONTAINER */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: var(--shadow-md);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* BRAND */
+.navbar-brand {
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  margin-left: var(--space-4);
+  font-weight: 500;
+  transition: var(--transition-medium);
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+  margin-left: var(--space-4);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition-medium);
+}
+
+/* Hover effects */
+.nav-link:hover,
+.logout-btn:hover,
+.navbar-brand:hover {
+  transform: translateY(-3px);
+}
+
+/* Active press */
+.logout-btn:active {
+  transform: scale(0.97);
+}

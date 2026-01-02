@@ -1,0 +1,13 @@
+@import "../styles/theme.css";
+@import "../styles/animations.css";
+
+/* FOOTER TEXT */
+.accuracy-footer {
+  text-align: center;
+  margin-top: var(--space-4);
+}
+
+.accuracy-footer-text {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+}
