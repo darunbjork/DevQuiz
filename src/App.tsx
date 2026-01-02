@@ -16,11 +16,7 @@ function App() {
 
   return (
     <Router>
-      <div style={{
-        backgroundColor: theme === 'dark' ? '#1a1a1a' : '#f5f5f5',
-        color: theme === 'dark' ? '#e5e5e5' : '#1a1a1a',
-        minHeight: '100vh'
-      }}>
+      <div className={`app-container ${theme}`}>
         <Navbar />
         <ToastContainer />
         <div style={{ padding: '20px' }}>
