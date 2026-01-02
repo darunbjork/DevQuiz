@@ -60,9 +60,33 @@ function Study() {
     setQuizQuestions([]);
 
     const detailedPrompt = `
-Based on the following study note, generate 5 multiple-choice questions...
-${studyNote}
-`;
+  
+    You are an AI that generates multiple-choice quiz questions.
+
+Create EXACTLY 5 questions based on the study notes below.
+
+FORMAT THE OUTPUT EXACTLY LIKE THIS:
+
+Q1: Question text here
+A) Option 1
+B) Option 2
+C) Option 3
+D) Option 4
+Correct: A
+
+Q2: Question text here
+A) Option 1
+B) Option 2
+C) Option 3
+D) Option 4
+Correct: C
+
+Do NOT add explanations.
+Do NOT add markdown.
+Do NOT add extra text.
+
+STUDY NOTES:
+${studyNote}`;
 
     try {
       const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
