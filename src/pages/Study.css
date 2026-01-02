@@ -16,7 +16,7 @@
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
+  color: transparent; /* Keep transparent for gradient */
 }
 
 /* FORM GROUP */
@@ -27,8 +27,9 @@
 }
 
 .form-label {
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: var(--space-2);
+  color: var(--color-text);
 }
 
 /* TEXTAREA + INPUT */
@@ -37,11 +38,13 @@
   width: 100%;
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  border: 1px solid #dcdcf5;
+  border: 1px solid var(--color-bg-soft); /* Dark mode compatible border */
   background: var(--color-bg-soft);
   font-size: 1rem;
   font-family: inherit;
   transition: var(--transition-fast);
+  color: var(--color-text);
+  font-weight: 700;
 }
 
 .study-textarea:focus,
@@ -55,22 +58,25 @@
 .question-card {
   padding: var(--space-4);
   border-radius: var(--radius-lg);
-  background: var(--color-bg-card);
+  background: var(--color-bg-card); /* Use theme variable for card background */
   box-shadow: var(--shadow-sm);
-  border: 1px solid #ececff;
+  border: 1px solid var(--border-color-card, #ececff); /* Dark mode compatible border */
 }
 
 .question-title {
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: var(--space-3);
+  color: var(--color-text);
 }
 
 .option-item {
   padding: var(--space-2);
   margin-bottom: var(--space-1);
   border-radius: var(--radius-sm);
-  border: 1px solid #e5e7eb;
-  background: white;
+  border: 1px solid var(--color-bg-soft); /* Dark mode compatible border */
+  background: var(--color-bg-soft);
+  color: var(--color-text);
+  font-weight: 700;
 }
 
 .option-correct {
