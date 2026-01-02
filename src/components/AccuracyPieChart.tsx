@@ -1,17 +1,21 @@
-import React from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import React from "react";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import "./AccuracyPieChart.css";
 
 interface AccuracyPieChartProps {
   totalCorrect: number;
   totalQuestions: number;
 }
 
-const AccuracyPieChart: React.FC<AccuracyPieChartProps> = ({ totalCorrect, totalQuestions }) => {
+const AccuracyPieChart: React.FC<AccuracyPieChartProps> = ({
+  totalCorrect,
+  totalQuestions,
+}) => {
   const totalIncorrect = totalQuestions - totalCorrect;
 
   const pieData = [
-    { name: 'Correct', value: totalCorrect, color: '#10b981' },
-    { name: 'Incorrect', value: totalIncorrect, color: '#ef4444' }
+    { name: "Correct", value: totalCorrect, color: "#10b981" },
+    { name: "Incorrect", value: totalIncorrect, color: "#ef4444" },
   ];
 
   return (
@@ -34,8 +38,9 @@ const AccuracyPieChart: React.FC<AccuracyPieChartProps> = ({ totalCorrect, total
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
-      <div style={{ textAlign: 'center', marginTop: '16px' }}>
-        <p style={{ fontSize: '14px', color: '#666' }}>
+
+      <div className="accuracy-footer">
+        <p className="accuracy-footer-text">
           Total Questions Answered: {totalQuestions}
         </p>
       </div>

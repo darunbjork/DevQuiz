@@ -1,42 +1,84 @@
+@import "./styles/theme.css";
+@import "./styles/animations.css";
+
+/* ROOT APP CONTAINER */
 #root {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: var(--space-6) var(--space-4);
+  text-align: left;
+}
+
+/* GLOBAL UTILITY CLASSES */
+.text-center {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.flex {
+  display: flex;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.grid {
+  display: grid;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* REMOVE OLD VITE LOGO STYLES */
+.logo,
+.logo:hover,
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  all: unset;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
+/* REMOVE UNUSED CARD OVERRIDE */
 .card {
-  padding: 2em;
+  padding: 0;
 }
 
-.read-the-docs {
-  color: #888;
+/* OPTIONAL: GLOBAL PAGE SPACING */
+.page-section {
+  margin-bottom: var(--space-6);
+}
+
+/* Breakpoints */
+@media (max-width: 768px) {
+  :root {
+    --space-7: 2rem;
+    --space-6: 1.5rem;
+    --space-5: 1.25rem;
+    --space-4: 1rem;
+    --space-3: 0.75rem;
+    --space-2: 0.5rem;
+    --space-1: 0.25rem;
+
+    --radius-lg: 0.75rem;
+  }
+
+  /* Root container */
+  #root {
+    padding: var(--space-4);
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 1.6rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+  }
+  p, span, label {
+    font-size: 0.95rem;
+  }
 }

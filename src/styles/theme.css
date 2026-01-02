@@ -1,0 +1,47 @@
+:root {
+  /* 🌈 Vibrant but more polished palette */
+  --color-primary: #6a5af9;
+  --color-primary-light: #8f82ff;
+  --color-primary-dark: #4b3fe0;
+
+  --color-accent: #ff7ac3;
+  --color-accent-light: #ff9bd4;
+  --color-accent-dark: #e85fa9;
+
+  --color-bg: #f7f7fb;
+  --color-bg-card: #ffffff;
+  --color-bg-soft: #f0efff;
+
+  --color-text: #1f1f2e;
+  --color-text-light: #4a4a5c;
+  --color-text-muted: #7a7a8c;
+
+  /* 🟣 Organic gradients */
+  --gradient-primary: linear-gradient(135deg, #6a5af9, #ff7ac3);
+  --gradient-soft: linear-gradient(135deg, #f0efff, #ffe9f6);
+
+  /* 🟦 Shadows (softer + more depth) */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* 🟢 Radiuses */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* 📏 Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* ⏱ Animation timings */
+  --transition-fast: 120ms ease;
+  --transition-medium: 220ms ease;
+  --transition-slow: 380ms ease;
+}

@@ -1,22 +1,16 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
+import "./Card.css";
 
 interface CardProps {
   children: ReactNode;
   title?: string;
-  style?: React.CSSProperties;
+  className?: string;
 }
 
-function Card({ children, title, style }: CardProps) {
+function Card({ children, title, className = "" }: CardProps) {
   return (
-    <div style={{
-      border: '1px solid #e5e7eb',
-      borderRadius: '0.5rem',
-      padding: '1.5rem',
-      backgroundColor: 'white',
-      boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-      ...style,
-    }}>
-      {title && <h3 style={{ marginBottom: '1rem' }}>{title}</h3>}
+    <div className={`card ${className}`}>
+      {title && <h3 className="card-title">{title}</h3>}
       {children}
     </div>
   );

@@ -1,0 +1,34 @@
+@import "../styles/theme.css";
+@import "../styles/animations.css";
+
+/* CARD WRAPPER */
+.card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md);
+  border: 1px solid #e5e7eb;
+  transition: var(--transition-medium);
+}
+
+/* Optional hover effect if you want */
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* CARD TITLE */
+.card-title {
+  margin-bottom: var(--space-4);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: var(--space-4);
+  }
+  .card-title {
+    font-size: 1.1rem;
+  }
+}
