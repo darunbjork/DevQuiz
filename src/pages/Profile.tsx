@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import {
   LineChart,
@@ -11,20 +10,17 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import QuizCard from "../components/QuizCard";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import AccuracyPieChart from "../components/AccuracyPieChart";
-import type { SavedQuizResult, Quiz, UserAnswer } from "../types";
 import "./Profile.css";
 
 function Profile() {
   const auth = useAuth();
   const [editName, setEditName] = useState(auth.user?.name || "");
-  const [activeTab, setActiveTab] = useState<
-    "quizzes" | "history" | "analytics"
-  >("quizzes");
-  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<"history" | "analytics">(
+    "history"
+  );
 
   if (!auth.user) {
     return <div className="profile-container">Please log in to view profile</div>;
@@ -95,15 +91,6 @@ function Profile() {
       <div className="profile-tabs">
         <button
           className={`tab-btn ${
-            activeTab === "quizzes" ? "tab-active" : ""
-          }`}
-          onClick={() => setActiveTab("quizzes")}
-        >
-          My Quizzes
-        </button>
-
-        <button
-          className={`tab-btn ${
             activeTab === "history" ? "tab-active" : ""
           }`}
           onClick={() => setActiveTab("history")}
@@ -122,40 +109,6 @@ function Profile() {
       </div>
 
       {/* TAB CONTENT */}
-      {activeTab === "quizzes" && (
-        <div>
-          <div className="history-header">
-            <h3 className="history-title">My Created Quizzes</h3>
-
-            <div style={{ display: "flex", gap: "8px" }}>
-              <Button onClick={() => navigate("/study")}>Generate with AI</Button>
-              <Button onClick={() => navigate("/create-quiz")}>
-                Create Manually
-              </Button>
-            </div>
-          </div>
-
-          {createdQuizzes.length === 0 ? (
-            <Card>
-              <p className="profile-subtitle" style={{ textAlign: "center", padding: "48px 0" }}>
-                You haven't created any quizzes yet.
-              </p>
-            </Card>
-          ) : (
-            <div className="quizzes-grid">
-              {createdQuizzes.map((quiz) => (
-                <QuizCard
-                  key={quiz.id}
-                  quiz={quiz}
-                  onDelete={auth.deleteCreatedQuiz}
-                  onTakeQuiz={(id) => navigate(`/take-quiz/${id}`)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
       {activeTab === "history" && (
         <div>
           <h3 className="history-title">Quiz History</h3>
@@ -227,7 +180,7 @@ function Profile() {
                               <p>
                                 <strong>Q{index + 1}:</strong> {answer.question}
                               </p>
-                              <p className="history-date">
+                              <p className="breakdown-item-text">
                                 {answer.isCorrect ? "✓ Correct" : "✗ Incorrect"}
                               </p>
                             </div>
@@ -260,36 +213,62 @@ function Profile() {
               </p>
             </Card>
           ) : (
-            <div className="analytics-grid">
-              <Card title="Performance Over Time">
-                <div style={{ height: "300px" }}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={performanceData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis domain={[0, 100]} />
-                      <Tooltip />
-                      <Legend />
-                      <Line
-                        type="monotone"
-                        dataKey="score"
-                        stroke="#4f46e5"
-                        strokeWidth={2}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </Card>
+            <>
+              <div className="analytics-grid">
+                <Card title="Performance Over Time">
+                  <div style={{ height: "300px" }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={performanceData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis domain={[0, 100]} />
+                        <Tooltip />
+                        <Legend />
+                        <Line
+                          type="monotone"
+                          dataKey="score"
+                          stroke="#4f46e5"
+                          strokeWidth={2}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </Card>
 
-              <Card title="Overall Accuracy">
-                <div style={{ height: "300px" }}>
-                  <AccuracyPieChart
-                    totalCorrect={totalCorrect}
-                    totalQuestions={totalQuestions}
-                  />
+                <Card title="Overall Accuracy">
+                  <div style={{ height: "300px" }}>
+                    <AccuracyPieChart
+                      totalCorrect={totalCorrect}
+                      totalQuestions={totalQuestions}
+                    />
+                  </div>
+                </Card>
+              </div>
+              
+              {/* Additional stats */}
+              <Card title="Quick Stats">
+                <div style={{ display: "flex", justifyContent: "space-around", padding: "16px 0" }}>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "2rem", fontWeight: "800", color: "#10b981" }}>
+                      {totalCorrect}
+                    </div>
+                    <p className="stats-label">Total Correct</p>
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "2rem", fontWeight: "800", color: "#ef4444" }}>
+                      {totalQuestions - totalCorrect}
+                    </div>
+                    <p className="stats-label">Total Incorrect</p>
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "2rem", fontWeight: "800", color: "#4f46e5" }}>
+                      {((totalCorrect / totalQuestions) * 100).toFixed(1)}%
+                    </div>
+                    <p className="stats-label">Overall Accuracy</p>
+                  </div>
                 </div>
               </Card>
-            </div>
+            </>
           )}
         </div>
       )}

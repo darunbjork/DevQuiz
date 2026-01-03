@@ -7,7 +7,7 @@
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   box-shadow: var(--shadow-md);
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color-card, #e5e7eb); /* Fallback for light mode if --border-color-card is not defined */
   transition: var(--transition-medium);
 }
 

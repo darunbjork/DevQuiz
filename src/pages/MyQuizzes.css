@@ -1,0 +1,73 @@
+@import "../styles/theme.css";
+ @import "../styles/animations.css";
+
+/* PAGE WRAPPER */
+.myquizzes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+  min-height: calc(100vh - 64px); /* Fill viewport minus navbar */
+}
+
+/* HEADER */
+.myquizzes-header {
+  margin-bottom: var(--space-5);
+}
+
+.myquizzes-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: var(--space-2);
+  color: var(--color-text);
+}
+
+.myquizzes-subtitle {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* NEW CARD STYLES */
+.myquizzes-card {
+  border: none;
+  box-shadow: none;
+  background: transparent; /* Let Card component handle background */
+}
+
+/* QUIZZES GRID */
+.quizzes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: var(--space-4);
+}
+
+/* HISTORY HEADER - FOR BUTTON ALIGNMENT */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.history-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* MEDIA QUERIES */
+ @media (max-width: 768px) {
+  .myquizzes-container {
+    min-height: calc(100vh - 56px);
+    padding: var(--space-4) var(--space-3);
+  }
+  
+  .quizzes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .history-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+}
