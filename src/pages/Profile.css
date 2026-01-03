@@ -136,7 +136,7 @@ body.dark-mode .profile-subtitle {
 }
 
 .breakdown-item p {
-  color: var(--color-text);
+  color: var(--color-text-on-light-bg);
   font-weight: 700;
 }
 

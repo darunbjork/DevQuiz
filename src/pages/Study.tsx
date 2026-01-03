@@ -18,36 +18,67 @@ function Study() {
   const navigate = useNavigate();
 
   const parseQuizText = (text: string): QuizQuestion[] => {
-    const questionBlocks = text.split(/(Q\d+:)/).filter(Boolean);
-    const pairedBlocks = questionBlocks.reduce((result, _value, index, array) => {
-      if (index % 2 === 0) result.push(array.slice(index, index + 2));
-      return result;
-    }, [] as string[][]);
+    // First, clean up the text
+    const cleanedText = text.trim();
 
-    return pairedBlocks
-      .filter((pair) => pair.length === 2 && pair[0].startsWith("Q"))
-      .map(([_, qBody], index) => {
-        const lines = qBody.split("\n").filter((l) => l.trim() !== "");
-        const questionText = lines[0].trim();
-        const options: string[] = [];
-        let correctAnswerIndex = -1;
+    // Split by "Q\d+:" pattern but keep the delimiter
+    const lines = cleanedText.split('\n');
+    const questions: QuizQuestion[] = [];
+    let currentQuestion: Partial<QuizQuestion> | null = null;
+    let options: string[] = [];
 
-        for (const line of lines.slice(1)) {
-          if (line.match(/^[A-D]\) /)) {
-            options.push(line.substring(3).trim());
-          } else if (line.startsWith("Correct: ")) {
-            const letter = line.substring("Correct: ".length).trim();
-            correctAnswerIndex = letter.charCodeAt(0) - "A".charCodeAt(0);
-          }
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+
+      // Check if this line starts a new question
+      const questionMatch = trimmedLine.match(/^Q(\d+):\s*(.*)/);
+      if (questionMatch) {
+        // If we have a previous question being built, add it
+        if (currentQuestion && currentQuestion.question && options.length === 4) {
+          questions.push({
+            id: Date.now() + questions.length,
+            question: currentQuestion.question,
+            options: [...options],
+            correctAnswer: currentQuestion.correctAnswer || 0,
+          });
         }
 
-        return {
-          id: Date.now() + index,
-          question: questionText,
-          options,
-          correctAnswer: correctAnswerIndex,
+        // Start new question
+        currentQuestion = {
+          question: questionMatch[2] || "", // Get question text after "Q1:"
         };
+        options = [];
+      }
+      // Check for options A) B) C) D)
+      else if (trimmedLine.match(/^[A-D]\)\s*(.*)/)) {
+        const optionMatch = trimmedLine.match(/^([A-D])\)\s*(.*)/);
+        if (optionMatch && currentQuestion) {
+          const [, letter, optionText] = optionMatch;
+          const optionIndex = letter.charCodeAt(0) - 'A'.charCodeAt(0);
+          options[optionIndex] = optionText;
+        }
+      }
+      // Check for correct answer
+      else if (trimmedLine.startsWith('Correct:')) {
+        const correctMatch = trimmedLine.match(/^Correct:\s*([A-D])/);
+        if (correctMatch && currentQuestion) {
+          const correctLetter = correctMatch[1];
+          currentQuestion.correctAnswer = correctLetter.charCodeAt(0) - 'A'.charCodeAt(0);
+        }
+      }
+    }
+
+    // Add the last question if it exists
+    if (currentQuestion && currentQuestion.question && options.length === 4) {
+      questions.push({
+        id: Date.now() + questions.length,
+        question: currentQuestion.question,
+        options: [...options],
+        correctAnswer: currentQuestion.correctAnswer || 0,
       });
+    }
+
+    return questions;
   };
 
   const handleGenerateQuiz = async () => {
@@ -59,31 +90,32 @@ function Study() {
     setLoading(true);
     setQuizQuestions([]);
 
-    const detailedPrompt = `
-  
-    You are an AI that generates multiple-choice quiz questions.
+    const detailedPrompt = `You are an AI that generates multiple-choice quiz questions.
 
 Create EXACTLY 5 questions based on the study notes below.
 
 FORMAT THE OUTPUT EXACTLY LIKE THIS:
 
-Q1: Question text here
-A) Option 1
-B) Option 2
-C) Option 3
-D) Option 4
-Correct: A
+Q1: [Your first question here]
+A) [Option A]
+B) [Option B]
+C) [Option C]
+D) [Option D]
+Correct: [A/B/C/D]
 
-Q2: Question text here
-A) Option 1
-B) Option 2
-C) Option 3
-D) Option 4
-Correct: C
+Q2: [Your second question here]
+A) [Option A]
+B) [Option B]
+C) [Option C]
+D) [Option D]
+Correct: [A/B/C/D]
 
-Do NOT add explanations.
-Do NOT add markdown.
-Do NOT add extra text.
+IMPORTANT RULES:
+1. Each question MUST have exactly 4 options: A), B), C), D)
+2. Each option must start with the letter and parenthesis (A), B), etc.)
+3. The correct answer must be on its own line starting with "Correct: "
+4. Do NOT add explanations, markdown, or extra text
+5. Make sure each question has meaningful, complete text after "Q1:"
 
 STUDY NOTES:
 ${studyNote}`;
@@ -104,13 +136,21 @@ ${studyNote}`;
 
       const data = await response.json();
       const aiResponse = data.candidates[0].content.parts[0].text;
+
+      // DEBUG: Log the AI response
+      console.log("AI Response:", aiResponse);
+
       const parsed = parseQuizText(aiResponse);
+
+      // DEBUG: Log parsed questions
+      console.log("Parsed questions:", parsed);
 
       if (parsed.length === 0) {
         toast.error("Failed to parse AI response");
         return;
       }
 
+      // ✅ FIX: Set the quiz questions
       setQuizQuestions(parsed);
 
       const firstWords = studyNote.split(" ").slice(0, 5).join(" ");
@@ -119,6 +159,7 @@ ${studyNote}`;
 
       toast.success(`Generated ${parsed.length} questions!`);
     } catch (error) {
+      console.error("Error generating quiz:", error);
       toast.error("Failed to generate quiz");
     } finally {
       setLoading(false);
@@ -146,7 +187,7 @@ ${studyNote}`;
     setQuizTitle("");
     setQuizDescription("");
 
-    navigate("/profile");
+    navigate("/my-quizzes");
   };
 
   return (
@@ -218,17 +259,6 @@ ${studyNote}`;
     </Card>
 
     <div className="button-row">
-      <Button
-        variant="secondary"
-        onClick={() => {
-          setQuizQuestions([]);
-          setQuizTitle("");
-          setQuizDescription("");
-        }}
-      >
-        Cancel
-      </Button>
-
       <Button onClick={handleSaveQuiz}>Save AI Quiz</Button>
     </div>
   </>

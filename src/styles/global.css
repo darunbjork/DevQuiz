@@ -12,6 +12,11 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease;
+}
+
+body.dark-mode {
+  background: var(--color-bg);
 }
 
 h1, h2, h3 {

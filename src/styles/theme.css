@@ -27,13 +27,14 @@
   --space-5: 24px;
   --space-6: 32px;
   --space-7: 48px;
+  --color-text-on-light-bg: #1a1a2e;
 }
 
 body.dark-mode {
   /* Dark mode colors */
-  --color-text: #ffffff;
-  --color-text-light: #c7d2fe;
-  --color-text-muted: #a5b4fc;
+  --color-text: #f1f5f9;
+  --color-text-light: #cbd5e1;
+  --color-text-muted: #94a3b8;
   --color-bg: #0f172a;
   --color-bg-soft: #1e293b;
   --color-bg-card: #1e293b;
@@ -41,8 +42,9 @@ body.dark-mode {
   --color-primary: #818cf8;
   --color-primary-light: #a5b4fc;
   --color-secondary: #94a3b8;
-  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a5b4fc 100%);
+  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); /* More appealing gradient */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
-}
+  --color-text-on-light-bg: #1a1a2e;
+

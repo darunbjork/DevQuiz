@@ -31,8 +31,8 @@ function Navbar() {
               Study
             </Link>
 
-            <Link to="/create-quiz" className="nav-link hover-lift">
-              Create Quiz
+            <Link to="/my-quizzes" className="nav-link hover-lift">
+              My Quizzes
             </Link>
 
             <Link to="/profile" className="nav-link hover-lift">

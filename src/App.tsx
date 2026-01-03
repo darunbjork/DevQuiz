@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Study from './pages/Study';
-import CreateQuiz from './pages/CreateQuiz';
+import MyQuizzes from './pages/MyQuizzes';
 import TakeQuiz from './pages/TakeQuiz';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useTheme } from './contexts/ThemeContext';
@@ -18,7 +19,18 @@ function App() {
     <Router>
       <div className={`app-container ${theme}`}>
         <Navbar />
-        <ToastContainer />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         <div style={{ padding: '20px' }}>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -34,9 +46,9 @@ function App() {
                 <Study />
               </ProtectedRoute>
             } />
-            <Route path="/create-quiz" element={
+            <Route path="/my-quizzes" element={
               <ProtectedRoute>
-                <CreateQuiz />
+                <MyQuizzes />
               </ProtectedRoute>
             } />
             <Route path="/take-quiz/:quizId" element={
