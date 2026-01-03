@@ -135,8 +135,9 @@ body.dark-mode .profile-subtitle {
   border-left: 4px solid;
 }
 
-.breakdown-item p {
-  color: var(--color-text-on-light-bg);
+.breakdown-item p,
+.breakdown-item-text {
+  color: #1a1a2e; /* Hardcoded dark color for readability on light backgrounds */
   font-weight: 700;
 }
 

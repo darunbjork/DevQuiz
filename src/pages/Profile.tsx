@@ -180,7 +180,7 @@ function Profile() {
                               <p>
                                 <strong>Q{index + 1}:</strong> {answer.question}
                               </p>
-                              <p className="history-date">
+                              <p className="breakdown-item-text">
                                 {answer.isCorrect ? "✓ Correct" : "✗ Incorrect"}
                               </p>
                             </div>
