@@ -1,5 +1,7 @@
 # DevQuiz: Our First Big React Project! 🚀
 
+https://github.com/darunbjork/DevQuiz
+
 Hey there! 👋 We're super excited to share DevQuiz, our project for learning and testing our knowledge on various topics, especially with a cool AI twist! We poured a lot of effort (and maybe a few late nights 😅) into making this happen.
 
 ## What is DevQuiz?
@@ -29,4 +31,28 @@ Building DevQuiz was an amazing learning experience! Here are some of the things
 *   **Quiz Sharing:** Let users share their AI-generated quizzes with friends.
 *   **Flashcards:** Integrate a flashcard feature for active recall.
 *   **User Avatars/Personalization:** Make the profile page even more customizable.
+
+## How to run the project
+
+To get DevQuiz up and running on your local machine, follow these simple steps:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/darunbjork/DevQuiz]
+    cd DevQuiz
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Start the development server:**
+    ```bash
+    npm run dev
+    npm run test
+    npm run test:ui
+    ```
+    This will typically start the application on `http://localhost:5173` (or another available port).
+
+4.  **Open in your browser:**
+    Navigate to the address provided by the development server (e.g., `http://localhost:5173`) in your web browser.
 
