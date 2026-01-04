@@ -10,12 +10,12 @@ describe('Button Component', () => {
   it('applies primary variant by default', () => {
     render(<Button>Test</Button>);
     const button = screen.getByText('Test');
-    expect(button).toHaveStyle('background-color: #4f46e5');
+    expect(button).toHaveClass('btn-primary');
   });
 
   it('applies danger variant when specified', () => {
     render(<Button variant="danger">Delete</Button>);
     const button = screen.getByText('Delete');
-    expect(button).toHaveStyle('background-color: #dc2626');
+    expect(button).toHaveClass('btn-danger');
   });
 });
