@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Button from './Button';
+import Button from '../../components/Button';
 
 describe('Button Component', () => {
   it('renders button with text', () => {
@@ -10,12 +10,12 @@ describe('Button Component', () => {
   it('applies primary variant by default', () => {
     render(<Button>Test</Button>);
     const button = screen.getByText('Test');
-    expect(button).toHaveStyle('background-color: #4f46e5');
+    expect(button).toHaveClass('btn-primary');
   });
 
   it('applies danger variant when specified', () => {
     render(<Button variant="danger">Delete</Button>);
     const button = screen.getByText('Delete');
-    expect(button).toHaveStyle('background-color: #dc2626');
+    expect(button).toHaveClass('btn-danger');
   });
 });
