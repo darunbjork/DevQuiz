@@ -31,6 +31,11 @@ Building DevQuiz was an amazing learning experience! Here are some of the things
 *   **Quiz Sharing:** Let users share their AI-generated quizzes with friends.
 *   **Flashcards:** Integrate a flashcard feature for active recall.
 *   **User Avatars/Personalization:** Make the profile page even more customizable.
+*   
+
+
+## Technicality and Tradeoffs
+* - When we built this project, we had to make a series of technical choices, and our goal was always to find a balance between structure and simplicity. We chose React with TypeScript because it gave us stability and made the code easier to reason about. For the global state, the Context API was more than enough for the size of this app — bringing in Redux would have added unnecessary complexity. We used LocalStorage so we could focus fully on the frontend without having to build a backend, and CSS variables became the foundation of our small design system with full light/dark theme support. Tailwind felt messy and hard to read.  For testing, we went with Vitest and React Testing Library because it’s fast, modern, and very easy to work with. Of course, there were trade‑offs: Context can get heavy in larger applications, LocalStorage isn’t secure, we could have written more tests, and a real backend would have made the app more realistic and scalable. But for this project, these choices felt right and gave us a good balance between functionality, learning, and development speed.
 
 ## How to run the project
 
