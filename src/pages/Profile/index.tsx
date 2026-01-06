@@ -13,13 +13,9 @@ import {
 import Card from "../../components/Card";
 import AccuracyPieChart from "../../components/AccuracyPieChart";
 import "./Profile.css";
-
 import ProfileHeader from "../../components/ProfileHeader";
-
 import ProfileStatsGrid from "../../components/ProfileStatsGrid";
-
 import ProfileTabs from "../../components/ProfileTabs";
-
 import QuizHistoryList from "../../components/QuizHistoryList";
 import EditProfileForm from "../../components/EditProfileForm";
 

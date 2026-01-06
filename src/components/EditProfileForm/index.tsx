@@ -2,9 +2,18 @@ import Card from "../Card";
 import Button from "../Button";
 
 interface EditProfileFormProps {
+  /**
+   * The current name value being edited. This is a required string.
+   */
   editName: string;
   setEditName: (name: string) => void;
   userEmail: string;
+  /**
+   * Callback function to update the user profile.
+   * The `data` object contains properties to update.
+   * `name?: string` indicates that the 'name' property is optional.
+   * If `name` is not provided in `data`, its value will be `undefined` (not `null`).
+   */
   onUpdateProfile: (data: { name?: string }) => void;
 }
 
