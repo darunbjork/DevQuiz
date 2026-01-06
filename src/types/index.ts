@@ -8,7 +8,7 @@ export interface QuizQuestion {
 export interface NewQuiz {
   title: string;
   description: string;
-  questions: Omit<QuizQuestion, 'id'>[];
+  questions: QuizQuestion[];
 }
 
 export interface Quiz extends NewQuiz {

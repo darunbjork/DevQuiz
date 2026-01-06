@@ -11,6 +11,7 @@ import MyQuizzes from './pages/MyQuizzes';
 import TakeQuiz from './pages/TakeQuiz';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useTheme } from './contexts/ThemeContext';
+import Footer from './components/Footer';
 
 function App() {
   const { theme } = useTheme();
@@ -58,6 +59,7 @@ function App() {
             } />
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
   );

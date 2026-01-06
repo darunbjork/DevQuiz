@@ -55,6 +55,7 @@ To get DevQuiz up and running on your local machine, follow these simple steps:
     npm run dev
     npm run test
     npm run test:ui
+    npm run lint
     ```
     This will typically start the application on `http://localhost:5173` (or another available port).
 
