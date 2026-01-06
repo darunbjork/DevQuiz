@@ -1,3 +1,10 @@
+🚀 See DevQuiz in Action: The Full User Journey
+<img width="1440" height="777" alt="Screenshot 2026-01-06 at 20 42 26" src="https://github.com/user-attachments/assets/c99a9dd9-0b9c-4866-8489-70179f520c85" />
+<img width="1440" height="778" alt="Screenshot 2026-01-06 at 20 41 28" src="https://github.com/user-attachments/assets/e8a42ee3-a1af-4859-a10f-6873c42b6a03" />
+<img width="1440" height="778" alt="Screenshot 2026-01-06 at 20 40 24" src="https://github.com/user-attachments/assets/1ba335f0-4c39-486e-9d02-2f505ef3afca" />
+<img width="2830" height="3943" alt="SCR-20260106-sagl" src="https://github.com/user-attachments/assets/eee1f476-6c03-4062-b313-e782a7dee94c" />
+<img width="2826" height="3149" alt="SCR-20260106-rzwd" src="https://github.com/user-attachments/assets/4dfea6ea-c26d-47d8-8ba2-87bdb7d37c3a" />
+<img width="1414" height="1714" alt="SCR-20260106-rzor" src="https://github.com/user-attachments/assets/17fc9ae4-3410-4660-bbda-6d2e1b8ab2ea" />
 # DevQuiz: Our First Big React Project! 🚀
 
 https://github.com/darunbjork/DevQuiz
