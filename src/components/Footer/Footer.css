@@ -1,5 +1,5 @@
-@import "../../styles/theme.css"; /* Corrected path */
-@import "../../styles/animations.css"; /* Corrected path */
+@import "../../styles/theme.css"; 
+@import "../../styles/animations.css"; 
 
 .footer {
   padding: var(--space-4);
@@ -8,7 +8,7 @@
   border-top: 1px solid var(--border-color-card);
   color: var(--color-text-muted);
   font-size: 0.9rem;
-  margin-top: var(--space-6); /* Add some space above the footer */
+  margin-top: var(--space-6); 
 }
 
 body.dark-mode .footer {

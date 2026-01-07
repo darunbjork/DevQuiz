@@ -1,7 +1,7 @@
 @import "../../styles/theme.css";
 @import "../../styles/animations.css";
 
-/* NAVBAR CONTAINER */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -16,7 +16,7 @@
   z-index: 50;
 }
 
-/* BRAND */
+
 .navbar-brand {
   text-decoration: none;
   font-size: 1.4rem;
@@ -24,7 +24,7 @@
   color: white;
 }
 
-/* NAV LINKS */
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@
   transition: var(--transition-medium);
 }
 
-/* LOGOUT BUTTON */
+
 .logout-btn {
   margin-left: var(--space-4);
   background: transparent;
@@ -51,14 +51,14 @@
   transition: var(--transition-medium);
 }
 
-/* Hover effects */
+
 .nav-link:hover,
 .logout-btn:hover,
 .navbar-brand:hover {
   transform: translateY(-3px);
 }
 
-/* Active press */
+
 .logout-btn:active {
   transform: scale(0.97);
 }

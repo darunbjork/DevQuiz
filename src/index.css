@@ -1,26 +1,26 @@
 @import "./styles/theme.css";
 
-/* GLOBAL ROOT VARIABLES */
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   font-weight: 400;
 
-  /* Remove forced dark mode */
+  
   color-scheme: light;
 
-  /* Use your design system background + text */
+  
   background-color: var(--color-bg);
   color: var(--color-text);
 
-  /* Rendering improvements */
+  
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* RESET BODY MARGINS */
+
 body {
   margin: 0;
   padding: 0;
@@ -28,7 +28,7 @@ body {
   color: var(--color-text);
 }
 
-/* GLOBAL LINK STYLE */
+
 a {
   color: var(--color-primary);
   text-decoration: none;
@@ -38,12 +38,12 @@ a:hover {
   text-decoration: underline;
 }
 
-/* REMOVE DEFAULT BUTTON STYLES */
+
 button {
   font-family: inherit;
 }
 
-/* REMOVE DEFAULT INPUT STYLES */
+
 input, textarea, select {
   font-family: inherit;
 }

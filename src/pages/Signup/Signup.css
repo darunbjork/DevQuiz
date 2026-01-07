@@ -1,7 +1,7 @@
 @import "../../styles/theme.css";
 @import "../../styles/animations.css";
 
-/* PAGE WRAPPER - Fill viewport height */
+
 .signup-container {
   max-width: 420px;
   margin: 0 auto;
@@ -13,7 +13,7 @@
   animation: fadeIn 0.6s ease forwards;
 }
 
-/* TITLE */
+
 .signup-title {
   text-align: center;
   font-size: 2rem;
@@ -25,14 +25,14 @@
   color: transparent;
 }
 
-/* FORM */
+
 .signup-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-4); /* Reduced from space-5 */
 }
 
-/* LABEL - FIX CONTRAST */
+
 .signup-label {
   font-weight: 600;
   margin-bottom: var(--space-2);
@@ -44,7 +44,7 @@ body.dark-mode .signup-label {
   color: var(--color-text); /* Use theme variable in dark mode */
 }
 
-/* INPUT */
+
 .signup-input {
   width: 100%;
   padding: var(--space-3);
@@ -62,13 +62,13 @@ body.dark-mode .signup-label {
   box-shadow: 0 0 0 3px rgba(106, 90, 249, 0.2);
 }
 
-/* Dark mode overrides */
+
 body.dark-mode .signup-input {
   border-color: #dcdcf5;
   color: var(--color-text);
 }
 
-/* SUBMIT BUTTON */
+
 .signup-btn {
   width: 100%;
   padding: var(--space-3);
@@ -81,7 +81,7 @@ body.dark-mode .signup-input {
   cursor: pointer;
   box-shadow: var(--shadow-md);
   transition: var(--transition-medium);
-  margin-top: var(--space-2); /* Added small margin */
+  margin-top: var(--space-2); 
 }
 
 .signup-btn:hover {
@@ -93,7 +93,7 @@ body.dark-mode .signup-input {
   transform: scale(0.97);
 }
 
-/* Placeholder color for better visibility */
+
 .signup-input::placeholder {
   color: #777; /* Darker placeholder for light mode */
   opacity: 0.7;
@@ -103,7 +103,7 @@ body.dark-mode .signup-input::placeholder {
   color: var(--color-text-light);
 }
 
-/* Add a footer style for the form */
+
 .signup-footer {
   margin-top: var(--space-4);
   text-align: center;
@@ -117,7 +117,7 @@ body.dark-mode .signup-footer {
 
 @media (max-width: 768px) {
   .signup-container {
-    min-height: calc(100vh - 100px); /* Adjust for mobile */
+    min-height: calc(100vh - 100px); 
     padding: var(--space-4);
   }
   

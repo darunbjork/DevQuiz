@@ -1,5 +1,5 @@
 :root {
-  /* Light mode colors */
+  
   --color-text: #1a1a2e; /* Dark text for light mode */
   --color-text-light: #666;
   --color-text-muted: #888;
@@ -31,7 +31,7 @@
 }
 
 body.dark-mode {
-  /* Dark mode colors */
+  
   --color-text: #f1f5f9;
   --color-text-light: #cbd5e1;
   --color-text-muted: #94a3b8;
