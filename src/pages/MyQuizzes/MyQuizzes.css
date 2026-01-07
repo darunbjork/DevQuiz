@@ -1,14 +1,14 @@
 @import "../../styles/theme.css";
 @import "../../styles/animations.css";
-/* PAGE WRAPPER */
+
 .myquizzes-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-6) var(--space-4);
-  min-height: calc(100vh - 64px); /* Fill viewport minus navbar */
+  min-height: calc(100vh - 64px); 
 }
 
-/* HEADER */
+
 .myquizzes-header {
   margin-bottom: var(--space-5);
 }
@@ -25,21 +25,21 @@
   font-weight: 600;
 }
 
-/* NEW CARD STYLES */
+
 .myquizzes-card {
   border: none;
   box-shadow: none;
-  background: transparent; /* Let Card component handle background */
+  background: transparent; 
 }
 
-/* QUIZZES GRID */
+
 .quizzes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: var(--space-4);
 }
 
-/* HISTORY HEADER - FOR BUTTON ALIGNMENT */
+
 .history-header {
   display: flex;
   justify-content: space-between;
@@ -53,7 +53,7 @@
   color: var(--color-text);
 }
 
-/* MEDIA QUERIES */
+
  @media (max-width: 768px) {
   .myquizzes-container {
     min-height: calc(100vh - 56px);

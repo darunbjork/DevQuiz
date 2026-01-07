@@ -1,14 +1,14 @@
 @import "../../styles/theme.css";
 @import "../../styles/animations.css";
 
-/* PAGE WRAPPER */
+
 .takequiz-container {
   max-width: 900px;
   margin: 0 auto;
   padding: var(--space-6) var(--space-4);
 }
 
-/* QUIZ HEADER */
+
 .quiz-header {
   margin-bottom: var(--space-5);
 }
@@ -25,7 +25,7 @@
   margin-bottom: var(--space-4);
 }
 
-/* PROGRESS SECTION */
+
 .progress-section {
   margin-bottom: var(--space-4);
 }
@@ -39,7 +39,7 @@
   color: var(--color-text-muted);
 }
 
-/* QUESTION DOTS */
+
 .question-dots {
   display: flex;
   gap: var(--space-2);
@@ -71,7 +71,7 @@
   color: #666;
 }
 
-/* QUESTION TEXT */
+
 .question-block {
   margin-bottom: var(--space-6);
 }
@@ -83,7 +83,7 @@
   color: var(--color-text);
 }
 
-/* OPTIONS */
+
 .options-list {
   display: flex;
   flex-direction: column;
@@ -122,7 +122,7 @@ body.dark-mode .option-btn {
 }
 
 
-/* OPTION CIRCLE */
+
 .option-circle {
   width: 28px;
   height: 28px;
@@ -146,14 +146,14 @@ body.dark-mode .option-circle {
   color: white;
 }
 
-/* NAV BUTTONS */
+
 .nav-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: var(--space-4);
 }
 
-/* RESULTS PAGE */
+
 .results-container {
   text-align: center;
   padding: var(--space-6) 0;
@@ -171,7 +171,7 @@ body.dark-mode .option-circle {
   color: var(--color-text);
 }
 
-/* DETAILED RESULTS */
+
 .detailed-results {
   margin-top: var(--space-6);
 }

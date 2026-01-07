@@ -1,7 +1,7 @@
 @import "../../styles/theme.css";
 @import "../../styles/animations.css";
 
-/* PAGE WRAPPER - Fill viewport height */
+
 .login-container {
   max-width: 420px;
   margin: 0 auto;
@@ -13,35 +13,35 @@
   animation: fadeIn 0.6s ease forwards;
 }
 
-/* TITLE */
+
 .login-title {
   text-align: center;
   font-size: 2rem;
   font-weight: 800;
-  margin-bottom: var(--space-5); /* Reduced from space-6 */
+  margin-bottom: var(--space-5); 
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* FORM */
+
 .login-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-4); /* Reduced from space-5 */
 }
 
-/* LABEL - FIX CONTRAST */
+
 .login-label {
   font-weight: 600;
   margin-bottom: var(--space-2);
   display: block;
-  color: #333; /* Fixed dark color for light mode */
+  color: #333; 
 }
 
 body.dark-mode .login-label {
-  color: var(--color-text); /* Use theme variable in dark mode */
+  color: var(--color-text); 
 }
 
 /* INPUT */
@@ -68,7 +68,7 @@ body.dark-mode .login-input {
   color: var(--color-text);
 }
 
-/* SUBMIT BUTTON */
+
 .login-btn {
   width: 100%;
   padding: var(--space-3);
@@ -81,7 +81,7 @@ body.dark-mode .login-input {
   cursor: pointer;
   box-shadow: var(--shadow-md);
   transition: var(--transition-medium);
-  margin-top: var(--space-2); /* Added small margin */
+  margin-top: var(--space-2); 
 }
 
 .login-btn:hover {
@@ -117,7 +117,7 @@ body.dark-mode .login-footer {
 
 @media (max-width: 768px) {
   .login-container {
-    min-height: calc(100vh - 100px); /* Adjust for mobile */
+    min-height: calc(100vh - 100px); 
     padding: var(--space-4);
   }
   

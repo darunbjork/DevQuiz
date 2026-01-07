@@ -1,4 +1,4 @@
-/* Soft hover lift */
+
 .hover-lift {
   transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
@@ -8,12 +8,12 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* Press animation */
+
 .pressable:active {
   transform: scale(0.97);
 }
 
-/* Fade-in */
+
 .fade-in {
   animation: fadeIn 0.4s ease forwards;
 }

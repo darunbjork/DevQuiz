@@ -1,4 +1,4 @@
-/* BUTTON */
+
 .btn {
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-pill);
@@ -20,7 +20,7 @@
   transform: scale(0.97);
 }
 
-/* CARD */
+
 .card {
   background: var(--color-bg-card);
   padding: var(--space-5);
@@ -33,7 +33,7 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* INPUT */
+
 .input {
   width: 100%;
   padding: var(--space-3) var(--space-4);
