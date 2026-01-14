@@ -12,3 +12,8 @@ Here are 10 questions a teacher or recruiter might ask you about the DevQuiz pro
 8.  I see you have components for charts like `AccuracyPieChart`. What role does data visualization play in this application?
 9.  What were some of the challenges you faced when parsing the AI-generated text in the `quizParser.ts` file?
 10. How did you decide to structure your UI into different reusable components inside the `src/components` folder?
+
+---
+
+**Explanation of `quizParser.ts`:**
+The `quizParser.ts` file parses raw AI-generated text, which follows a specific format for questions, options, and correct answers. It transforms this text into structured `QuizQuestion` objects for the application to use.
