@@ -39,6 +39,12 @@ ${studyNote}`;
     const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
     const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
+    // This is where we send our request to the Google Gemini AI.
+    // We use the `fetch` function to make a web request.
+    // `method: "POST"` means we are sending data to the AI.
+    // `headers` tell the AI that we are sending data in JSON format.
+    // `body` contains the actual message (the detailedPrompt) we want the AI to process,
+    // formatted as JSON.
     const response = await fetch(GEMINI_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -50,13 +56,25 @@ ${studyNote}`;
     if (!response.ok) throw new Error("Failed to generate quiz");
 
     const data = await response.json();
+ 
+    // After the AI responds, we need to get the actual text of its answer.
+    // The AI's response comes in a structured format, so we look inside
+    // `data.candidates` (which are potential responses), then `content` (the main part of the response),
+    // then `parts` (different sections of the content), and finally `text` (the actual quiz text).
     const aiResponse = data.candidates[0].content.parts[0].text;
 
-    console.log("AI Response:", aiResponse);
+    // console.log("AI Response:", aiResponse);
 
+    // Now that we have the raw text response from the AI, we need to turn it
+    // into a usable list of quiz questions.
+    // The `parseQuizText` function takes the AI's text and converts it
+    // into a structured format that our application can use.
     const parsed = parseQuizText(aiResponse);
     console.log("Parsed questions:", parsed);
 
+    // If `parsed.length` is 0, it means that our `parseQuizText` function
+    // couldn't find any valid questions in the AI's response, or the AI
+    // didn't provide any questions that matched our expected format.
     if (parsed.length === 0) {
       return { questions: [], error: "Failed to parse AI response" };
     }

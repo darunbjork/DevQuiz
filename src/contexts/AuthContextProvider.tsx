@@ -1,10 +1,9 @@
-import { createContext, useState, useEffect, type ReactNode } from 'react';
+// Second: AuthContextProvider 
+import { useState, useEffect, type ReactNode } from 'react';
 import { toast } from 'react-toastify';
-import type { User, NewQuiz, Quiz, SavedQuizResult, AuthContextType } from '../types';
+import type { User, NewQuiz, Quiz, SavedQuizResult } from '../types';
 import * as storage from '../utils/storage.ts';
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { AuthContext } from './AuthContext';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -62,9 +61,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
     
     storage.addUser(newUser);
-    setUser(newUser);
-    setIsAuthenticated(true);
-    storage.setCurrentUser(newUser.id);
     toast.success('Account created successfully!');
     return true;
   };
@@ -103,7 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       id: Date.now(),
       date: new Date().toISOString().split('T')[0],
       userId: user.id,
-      source: 'manual',
+      source: 'ai',
       questions: quizData.questions.map((q, index) => ({
         ...q,
         id: Date.now() + index
@@ -190,4 +186,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
+} 
+export { AuthContext };
+

@@ -15,7 +15,7 @@ export interface Quiz extends NewQuiz {
   id: number;
   date: string;
   userId: number;
-  source: 'ai' | 'manual'; 
+  source: 'ai'; 
   noteText?: string; 
 }
 

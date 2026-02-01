@@ -13,11 +13,15 @@ import type { QuizQuestion } from "../types";
  * Each question is identified by "Q<number>:", options by "A) ", "B) ", etc.,
  * and the correct answer by "Correct: [A-D]".
  *
- * @param text - The raw string containing quiz questions in the specified format.
+ * @param text - The raw string containing quiz questions in the specified format. This is the complete text response from the AI.
  * @returns An array of `QuizQuestion` objects, each with an ID, question text, options, and correct answer index.
  */
 export const parseQuizText = (text: string): QuizQuestion[] => {
+  // `(text: string)` means this function expects one input, named `text`, which must be a 'string' (like words or sentences).
+  // The `: QuizQuestion[]` after the parentheses means the function will give back (return) a list (array) of 'QuizQuestion' objects.
   const cleanedText = text.trim(); // Remove leading/trailing whitespace from the input text.
+  // We split the entire AI response text into individual lines to process them one by one.
+  // This does NOT mean 4 options per 5 questions, but rather each line of the AI's output.
   const lines = cleanedText.split('\n'); // Split the cleaned text into individual lines.
   const questions: QuizQuestion[] = []; // Initialize an empty array to store the parsed quiz questions.
   let currentQuestion: Partial<QuizQuestion> | null = null; // Store the question being built. Partial allows properties to be added one by one.

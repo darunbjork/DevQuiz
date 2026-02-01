@@ -1,3 +1,4 @@
+// Third: useAuth.ts Role: Acts as a safety gate. If a developer tries to use useAuth() outside the Provider tree, it throws an error immediately instead of returning undefined.
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContextProvider';
 
