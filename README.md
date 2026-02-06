@@ -1,71 +1,174 @@
-🚀 See DevQuiz in Action: The Full User Journey
-<img width="1440" height="777" alt="Screenshot 2026-01-06 at 20 42 26" src="https://github.com/user-attachments/assets/c99a9dd9-0b9c-4866-8489-70179f520c85" />
-<img width="1440" height="778" alt="Screenshot 2026-01-06 at 20 41 28" src="https://github.com/user-attachments/assets/e8a42ee3-a1af-4859-a10f-6873c42b6a03" />
-<img width="1440" height="778" alt="Screenshot 2026-01-06 at 20 40 24" src="https://github.com/user-attachments/assets/1ba335f0-4c39-486e-9d02-2f505ef3afca" />
-<img width="2830" height="3943" alt="SCR-20260106-sagl" src="https://github.com/user-attachments/assets/eee1f476-6c03-4062-b313-e782a7dee94c" />
-<img width="2826" height="3149" alt="SCR-20260106-rzwd" src="https://github.com/user-attachments/assets/4dfea6ea-c26d-47d8-8ba2-87bdb7d37c3a" />
-<img width="1414" height="1714" alt="SCR-20260106-rzor" src="https://github.com/user-attachments/assets/17fc9ae4-3410-4660-bbda-6d2e1b8ab2ea" />
-# DevQuiz: Our First Big React Project! 🚀
+# DevQuiz: Technical Deep Dive
 
-https://github.com/darunbjork/DevQuiz
+This document provides a developer-focused explanation of the question generation and parsing process in DevQuiz.
 
-Hey there! 👋 We're super excited to share DevQuiz, our project for learning and testing our knowledge on various topics, especially with a cool AI twist! We poured a lot of effort (and maybe a few late nights 😅) into making this happen.
+## High-Level Flow
 
-## What is DevQuiz?
+1.  **User Input**: The user provides study notes on the `/study` page.
+2.  **API Request**: The frontend constructs a detailed prompt and sends it to the Gemini API.
+3.  **API Response**: The Gemini API returns a formatted string containing the quiz.
+4.  **Parsing**: The frontend parses the string into a structured data format.
+5.  **State Update**: The parsed data is stored in the React component's state.
+6.  **UI Render**: The UI updates to display the quiz questions.
 
-DevQuiz is a web application where users can:
+## Core Components
 
-*   **Study with AI:** Input your study notes, and our awesome AI (powered by Gemini) will generate a multiple-choice quiz for you! How cool is that? ✨
-*   **Take Quizzes:** Test your knowledge on AI-generated quizzes.
-*   **Track Progress:** See your quiz history, performance analytics, and manage your created quizzes all in one place.
-*   **Dark Mode Toggle:** Because who doesn't love dark mode? 😎 We worked hard to make sure it looks good everywhere!
+*   **`src/pages/Study/index.tsx`**: The main page component for the study feature. It manages the state for the study notes, quiz questions, and loading status.
+*   **`src/services/quizGenerator.ts`**: This service is responsible for communicating with the Gemini API.
+*   **`src/utils/quizParser.ts`**: This utility contains the logic for parsing the raw text response from the API into a structured format.
 
-## Our Journey & What We Learned 🛠️
+## Detailed Process
 
-Building DevQuiz was an amazing learning experience! Here are some of the things we tackled and some of the "aha!" moments we had:
+### 1. User Interaction (`/study` page)
 
-*   **React & TypeScript:** This project really pushed us to get comfortable with React hooks, components, and the power of TypeScript for type-safety. Sometimes TypeScript felt like a strict teacher, but it definitely saved us from some silly bugs!
-*   **Routing (React Router DOM):** Setting up navigation and protected routes was a fun challenge. We learned how to make sure only logged-in users could access certain parts of the app.
-*   **State Management:** Keeping track of user data, quiz questions, and scores across different components was tricky. We got a lot of practice with `useState` and `useContext`.
-*   **AI Integration (Gemini API):** Connecting to the Gemini API was probably the most exciting part! We learned how to send prompts and parse the AI's responses to create dynamic content. Getting the prompt *just right* was an art form!
-*   **Styling with CSS Variables & Dark Mode:** Making the app look good in both light and dark modes, and ensuring everything was readable, taught us a lot about CSS variables and responsive design. We had a few head-scratchers trying to get colours just right in dark mode, but we got there! 💪
-*   **Debugging (Oh, the Debugging!):** We spent a good amount of time with `console.log` and the browser's developer tools. Learning to understand error messages and trace problems was a huge skill we sharpened.
-*   **Git & GitHub:** Collaborating (even just with ourselves!) using Git commands like `add`, `commit`, `branch`, and `checkout` became second nature. We even learned about `git stash` the hard way! 
+The user interacts with the `StudyNotesInput` component. Upon clicking "Generate Quiz", the `handleGenerateQuiz` function in `src/pages/Study/index.tsx` is invoked.
 
-## Future Ideas (If we had more time!) 💡
+### 2. API Call (`quizGenerator.ts`)
 
-*   **More Quiz Customisation:** Allow users to specify quiz difficulty, question types (true/false, fill-in-the-blank), or number of questions.
-*   **Quiz Sharing:** Let users share their AI-generated quizzes with friends.
-*   **Flashcards:** Integrate a flashcard feature for active recall.
-*   **User Avatars/Personalisation:** Make the profile page even more customizable.
-*   
+The `handleGenerateQuiz` function calls `generateQuizFromNotes`, passing the user's study notes.
 
+`generateQuizFromNotes` assembles a prompt with specific formatting instructions and sends it to the Gemini API endpoint `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`.
 
-## Technicality and Tradeoffs
-* - When we built this project, we had to make a series of technical choices, and our goal was always to find a balance between structure and simplicity. We chose React with TypeScript because it gave us stability and made the code easier to reason about. For the global state, the Context API was more than enough for the size of this app — bringing in Redux would have added unnecessary complexity. We used LocalStorage so we could focus fully on the frontend without having to build a backend, and CSS variables became the foundation of our small design system with full light/dark theme support. Tailwind felt messy and hard to read.  For testing, we went with Vitest and React Testing Library because it’s fast, modern, and very easy to work with. Of course, there were trade‑offs: Context can get heavy in larger applications, LocalStorage isn’t secure, we could have written more tests, and a real backend would have made the app more realistic and scalable. However, for this project, these choices felt right and provided a good balance between functionality, learning, and development speed. We are forced to use AI in fixing AI response issues, and we have some design problems that are becoming problematic. Therefore, we use AI with a smart set, allowing us to understand what's happening and why we are using it.
+The `fetch` API is used to make a `POST` request. The body of the request is a JSON object containing the prompt.
 
-## How to run the project
+### 3. Response Parsing (`quizParser.ts`)
 
-To get DevQuiz up and running on your local machine, follow these simple steps:
+The raw text response from the Gemini API is passed to the `parseQuizText` function.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/darunbjork/DevQuiz]
-    cd DevQuiz
-    ```
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-3.  **Start the development server:**
-    ```bash
-    npm run dev
-    npm run test
-    npm run test:ui
-    npm run lint
-    ```
-    This will typically start the application on `http://localhost:5173` (or another available port).
+`parseQuizText` works as follows:
+*   It splits the input string into an array of lines.
+*   It iterates through each line, using regular expressions to identify questions (`/^Q(\d+):/`), options (`/^[A-D]\)/`), and the correct answer (`/^Correct:/`).
+*   It progressively builds an array of `QuizQuestion` objects. Each object includes an `id`, `question` text, an array of `options`, and the `correctAnswer` index.
 
-4.  **Open in your browser:**
-    Navigate to the address provided by the development server (e.g., `http://localhost:5173`) in your web browser.
+### Limitations of Current Parsing
 
+The current parsing mechanism in `src/utils/quizParser.ts` relies heavily on regular expressions to extract structured quiz data from the AI's plain-text response. While functional, this approach presents significant limitations:<br>
+
+*   **Brittle Data Extraction**: The regex patterns are highly dependent on the AI generating output in a precise, predefined format. Any minor deviation by the AI (e.g., extra spaces, different punctuation, or unexpected line breaks) can lead to parsing failures, resulting in incomplete or corrupted quiz data.<br>
+*   **Data Integrity Risk**: Since there's no formal schema validation, the system cannot reliably ensure that the extracted data conforms to the expected `QuizQuestion` structure. This can lead to unexpected behavior in the application.<br>
+*   **Lack of Robustness**: This method is not robust against variations in AI output, which can change over time or with different models. It makes the application vulnerable to changes outside its direct control.<br><br>
+
+**Recommendation for improved reliability:** Instead of relying on brittle regex parsing of plain text, a more secure and robust approach would be to instruct the AI to generate the quiz content directly as a **JSON object**. This would allow the application to use standard and reliable JSON parsing (`JSON.parse()`) and schema validation (e.g., using libraries like Zod) to ensure data integrity and create a much more resilient parsing process.
+
+### Proposed Solution: Robust Quiz Parsing with JSON and Schema Validation
+
+To address the brittleness and improve reliability, the recommended approach is to leverage JSON output from the AI combined with schema validation. This provides a "middleware" layer for data integrity.
+
+**Core Steps:**<br>
+
+1.  **Update the AI Prompt for JSON Output**: Instruct the AI to generate content *exclusively* in a specified JSON format.<br>
+    ```typescript
+    const jsonPrompt = `You are an AI that generates multiple-choice quiz questions.
+    Create EXACTLY 5 questions based on the study notes below.
+    RESPOND WITH VALID JSON ONLY. No markdown, no explanations, no code blocks.
+    Required JSON structure:
+    {
+      "questions": [
+        {
+          "question": "string",
+          "options": ["string", "string", "string", "string"],
+          "correctAnswer": 0
+        }
+      ]
+    }
+    correctAnswer must be 0, 1, 2, or 3 (index of correct option).
+    STUDY NOTES:
+    ${studyNote}`;
+    ```<br>
+2.  **Request JSON from Gemini API**: Explicitly set `responseMimeType` to `application/json` in the API call's `generationConfig` to encourage structured output.<br>
+    ```typescript
+    const response = await fetch(GEMINI_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: jsonPrompt }] }],
+        generationConfig: {
+          responseMimeType: "application/json",  // Force JSON output
+        },
+      }),
+    });
+    ```<br>
+3.  **Implement Zod Schema Validation**: Use a library like Zod to define the expected structure of the AI's JSON response. This acts as a robust validation "middleware."<br>
+    ```typescript
+    import { z } from "zod";
+
+    const QuizQuestionSchema = z.object({
+      question: z.string().min(1),
+      options: z.array(z.string()).length(4),
+      correctAnswer: z.number().int().min(0).max(3),
+    });
+
+    const QuizResponseSchema = z.object({
+      questions: z.array(QuizQuestionSchema).length(5),
+    });
+
+    type QuizResponse = z.infer<typeof QuizResponseSchema>;
+    ```<br>
+4.  **Parse and Validate AI Response**: After fetching, parse the response as JSON and then validate it against the defined Zod schema. Handle validation failures gracefully.<br>
+    ```typescript
+    export const generateQuizFromNotes = async (studyNote: string): Promise<{
+      questions: QuizQuestion[];
+      error?: string;
+    }> => {
+      try {
+        // ... fetch code ...
+
+        const data = await response.json();
+        const aiResponse = data.candidates[0].content.parts[0].text;
+
+        const parsedJson = JSON.parse(aiResponse); // Raw JSON parse
+        const validated = QuizResponseSchema.safeParse(parsedJson); // Zod validation
+
+        if (!validated.success) {
+          console.error("Validation errors:", validated.error.issues);
+          return { questions: [], error: "AI response format invalid" };
+        }
+
+        const questions: QuizQuestion[] = validated.data.questions.map((q, i) => ({
+          id: Date.now() + i,
+          ...q,
+        }));
+
+        return { questions };
+
+      } catch (error) {
+        return { questions: [], error: "Failed to generate quiz" };
+      }
+    };
+    ```<br>
+
+**Benefits of this Approach:**<br>
+
+*   **Reduced Prompt Complexity**: The prompt focuses on content and structure, not overly rigid formatting.<br>
+*   **Robust Error Handling**: Zod provides explicit, detailed error messages for malformed responses.<br>
+*   **Type Safety**: Automatic type inference from Zod schemas improves developer experience and reduces runtime errors.<br>
+*   **Increased Reliability**: JSON mode is generally more consistent, and validation catches any remaining inconsistencies.<br>
+
+### Alternative Approaches<br>
+
+*   **Leverage APIs with Guaranteed Structured Output**: Some generative AI APIs (e.g., OpenAI with `response_format: { type: "json_object" }`) offer stronger guarantees for JSON output, which can further reduce parsing issues.<br>
+*   **Hybrid Approach (Text Sanitization)**: If direct JSON output is not consistently reliable, an intermediary sanitization step can be added. This involves pre-processing the raw text response to remove common extraneous elements (like markdown code blocks or conversational intros) before attempting `JSON.parse()`.<br>
+    ```typescript
+    const sanitizeAiResponse = (text: string): string => {
+      text = text.replace(/```json\n?/g, '').replace(/```\n?/g, ''); // Remove markdown code blocks
+      text = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1); // Extract potential JSON part
+      return text;
+    };
+    // Then parse and validate:
+    // const jsonString = sanitizeAiResponse(aiResponse);
+    // const parsed = JSON.parse(jsonString);
+    // const validated = QuizResponseSchema.safeParse(parsed);
+    ```<br>
+    This hybrid method is still more fragile than direct JSON output but can improve the success rate for inconsistent text responses. Zod validation remains crucial here.<br>
+*   **XML or YAML Output**: While JSON is generally preferred for its simplicity and wide support in web development, other structured data formats like XML or YAML could also be used if there's a specific ecosystem or tooling advantage. However, this would still require similar schema definition and validation steps.<br>
+*   **Fine-tuning/Custom Models**: For ultimate control and consistency, fine-tuning a smaller AI model on specific quiz formats could be considered. This is a more advanced solution requiring significant data and expertise.
+
+### 4. State Management and UI
+
+The array of `QuizQuestion` objects returned by `parseQuizText` is used to update the `quizQuestions` state in the `Study` component.
+
+React's state update triggers a re-render, and the `QuizQuestionsDisplay` component then renders the questions, options, and other interactive elements.
+
+This architecture ensures a clean separation of concerns, with distinct modules for API interaction, data parsing, and UI representation.
+
+<br>
