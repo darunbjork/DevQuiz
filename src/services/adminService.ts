@@ -42,7 +42,9 @@ export const adminService = {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json', // Add Content-Type header
       },
+      body: JSON.stringify({ id: userId }), // Send userId in the body
     });
 
     if (!response.ok) {
