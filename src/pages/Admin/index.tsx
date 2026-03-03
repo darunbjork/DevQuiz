@@ -84,65 +84,65 @@ const AdminPanel = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">Admin Panel - User Management</h1>
-      <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+      <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Admin Panel - User Management</h1>
+      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden">
         <table className="min-w-full leading-normal">
           <thead>
-            <tr>
-              <th className="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
+            <tr className="bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-gray-700 dark:to-gray-900 text-white">
+              <th className="px-6 py-3 border-b-2 border-indigo-700 dark:border-gray-600 text-left text-xs font-semibold uppercase tracking-wider">
                 Username
               </th>
-              <th className="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
+              <th className="px-6 py-3 border-b-2 border-indigo-700 dark:border-gray-600 text-left text-xs font-semibold uppercase tracking-wider">
                 Email
               </th>
-              <th className="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
+              <th className="px-6 py-3 border-b-2 border-indigo-700 dark:border-gray-600 text-left text-xs font-semibold uppercase tracking-wider">
                 Role
               </th>
-              <th className="px-5 py-3 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
+              <th className="px-6 py-3 border-b-2 border-indigo-700 dark:border-gray-600 text-left text-xs font-semibold uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
-            {users.map((u) => (
-              <tr key={u.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                <td className="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+            {users.map((u, index) => (
+              <tr key={u.id} className={`transition-colors duration-200 ${index % 2 === 0 ? 'bg-gray-50 dark:bg-gray-700' : 'bg-white dark:bg-gray-800'} hover:bg-gray-100 dark:hover:bg-gray-600`}>
+                <td className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-sm">
                   <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{u.username}</p>
                 </td>
-                <td className="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                <td className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-sm">
                   <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{u.email}</p>
                 </td>
-                <td className="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                <td className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-sm">
                   <span
-                    className={`relative inline-block px-3 py-1 font-semibold leading-tight ${
-                      u.role === 'admin' ? 'text-green-900' : 'text-blue-900'
+                    className={`relative inline-block px-3 py-1 font-semibold leading-tight rounded-full ${
+                      u.role === 'admin'
+                        ? 'bg-green-200 text-green-900 dark:bg-green-700 dark:text-green-100'
+                        : 'bg-blue-200 text-blue-900 dark:bg-blue-700 dark:text-blue-100'
                     }`}
                   >
-                    <span
-                      aria-hidden
-                      className={`absolute inset-0 opacity-50 rounded-full ${
-                        u.role === 'admin' ? 'bg-green-200' : 'bg-blue-200'
-                      }`}
-                    ></span>
                     <span className="relative">{u.role}</span>
                   </span>
                 </td>
-                <td className="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
+                <td className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-sm">
                   {user?.id !== u.id && ( // Prevent admin from changing their own role
-                    <>
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                       <button
                         onClick={() => handleChangeRole(u.id, u.role)}
-                        className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 mr-4"
+                        className="px-4 py-2 rounded-lg font-medium text-white transition-colors duration-200
+                                   bg-indigo-500 hover:bg-indigo-600
+                                   dark:bg-indigo-700 dark:hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
                       >
                         {u.role === 'admin' ? 'Demote to User' : 'Promote to Admin'}
                       </button>
                       <button
                         onClick={() => handleDeleteUser(u.id, u.username)}
-                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200"
+                        className="px-4 py-2 rounded-lg font-medium text-white transition-colors duration-200
+                                   bg-red-500 hover:bg-red-600
+                                   dark:bg-red-700 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
                       >
                         Delete User
                       </button>
-                    </>
+                    </div>
                   )}
                 </td>
               </tr>
