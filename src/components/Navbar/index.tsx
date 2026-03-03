@@ -27,6 +27,12 @@ function Navbar() {
           </>
         ) : (
           <>
+            {auth.user?.role === 'admin' && ( // Conditionally render Admin Panel link
+              <Link to="/admin" className="nav-link hover-lift">
+                Admin Panel
+              </Link>
+            )}
+
             <Link to="/study" className="nav-link hover-lift">
               Study
             </Link>

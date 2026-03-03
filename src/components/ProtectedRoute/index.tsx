@@ -4,13 +4,19 @@ import type { ReactNode } from 'react';
 
 interface ProtectedRouteProps {
   children: ReactNode;
+  adminOnly?: boolean; // Add adminOnly prop
 }
 
-function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const auth = useAuth();
+function ProtectedRoute({ children, adminOnly }: ProtectedRouteProps) {
+  const { isAuthenticated, user } = useAuth(); // Destructure user from useAuth
   
-  if (!auth.isAuthenticated) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
+  }
+
+  // If adminOnly is true, check if the user has the admin role
+  if (adminOnly && (!user || user.role !== 'admin')) {
+    return <Navigate to="/" />; // Redirect to home or an unauthorized page
   }
   
   return <>{children}</>;
