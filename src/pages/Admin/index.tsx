@@ -28,7 +28,7 @@ const AdminPanel = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user?.role, adminService.getAllUsers]);
+  }, [token, user?.role]);
 
   const handleChangeRole = async (userId: string, currentRole: 'admin' | 'user') => {
     if (!token) {
@@ -45,6 +45,24 @@ const AdminPanel = () => {
     } catch (err) {
       console.error('Failed to change user role:', err);
       toast.error((err as Error).message || 'Failed to change user role.');
+    }
+  };
+
+  const handleDeleteUser = async (userId: string, username: string) => {
+    if (!token) {
+      toast.error('Authentication token not found.');
+      return;
+    }
+
+    if (window.confirm(`Are you sure you want to delete user "${username}"? This action cannot be undone and will delete all associated data.`)) {
+      try {
+        await adminService.deleteUser(userId, token);
+        toast.success(`User "${username}" deleted successfully!`);
+        fetchUsers(); // Re-fetch users to update the UI
+      } catch (err) {
+        console.error('Failed to delete user:', err);
+        toast.error((err as Error).message || 'Failed to delete user.');
+      }
     }
   };
 
@@ -111,12 +129,20 @@ const AdminPanel = () => {
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm">
                   {user?.id !== u.id && ( // Prevent admin from changing their own role
-                    <button
-                      onClick={() => handleChangeRole(u.id, u.role)}
-                      className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200"
-                    >
-                      {u.role === 'admin' ? 'Demote to User' : 'Promote to Admin'}
-                    </button>
+                    <>
+                      <button
+                        onClick={() => handleChangeRole(u.id, u.role)}
+                        className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-200 mr-4"
+                      >
+                        {u.role === 'admin' ? 'Demote to User' : 'Promote to Admin'}
+                      </button>
+                      <button
+                        onClick={() => handleDeleteUser(u.id, u.username)}
+                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-200"
+                      >
+                        Delete User
+                      </button>
+                    </>
                   )}
                 </td>
               </tr>

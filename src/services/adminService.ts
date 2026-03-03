@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../config/api';
-import { User } from '../types';
+import type { User } from '../types';
 
 export const adminService = {
   getAllUsers: async (token: string): Promise<User[]> => {
@@ -35,5 +35,22 @@ export const adminService = {
 
     const updatedUser: User = await response.json();
     return updatedUser;
+  },
+
+  deleteUser: async (userId: string, token: string): Promise<{ message: string }> => {
+    const response = await fetch(`${API_BASE_URL}/api/admin/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to delete user');
+    }
+
+    const result: { message: string } = await response.json();
+    return result;
   },
 };
