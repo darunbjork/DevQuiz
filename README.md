@@ -1,6 +1,16 @@
 # DevQuiz: Our First Big React Project! 🚀
+<img width="1440" height="644" alt="Screenshot 2026-03-04 at 00 23 00" src="https://github.com/user-attachments/assets/e25d6ff7-9523-4566-9cba-d256b865d05c" />
 
-https://github.com/darunbjork/DevQuiz
+https://github.com/darunbjork/DevQuiz<img width="1440" height="781" alt="Screenshot 2026-03-04 at 00 23 29" src="https://github.com/user-attachments/assets/f775ad90-fb91-44e4-99b1-d5aaaa8304bb" />
+<img width="1440" height="776" alt="Screenshot 2026-03-04 at 00 24 09" src="https://github.com/user-attachments/assets/d172cc79-634b-4f9f-bee3-338b6366dfda" />
+<img width="1440" height="777" alt="Screenshot 2026-03-04 at 00 26 12" src="https://github.com/user-attachments/assets/eb3ac283-1549-4041-baeb-bd72bfe85495" />
+<img width="1440" height="778" alt="Screenshot 2026-03-04 at 00 24 31" src="https://github.com/user-attachments/assets/eca13b0d-44b6-4acc-b466-6fa0c3889b7e" />
+<img width="1440" height="779" alt="Screenshot 2026-03-04 at 00 37 33" src="https://github.com/user-attachments/assets/ae4e973e-d207-4187-80c4-ccc950ac2664" />
+<img width="1440" height="778" alt="Screenshot 2026-03-04 at 00 37 10" src="https://github.com/user-attachments/assets/e1e3f250-1063-48ba-9f87-1b57674e3483" />
+<img width="1440" height="777" alt="Screenshot 2026-03-04 at 00 36 31" src="https://github.com/user-attachments/assets/79de0155-a5b3-4a5d-96a3-6d8b0b4e2dfe" />
+<img width="1440" height="778" alt="Screenshot 2026-03-04 at 00 36 15" src="https://github.com/user-attachments/assets/270ef977-2d00-4b47-b1ef-d650eedc4a45" />
+
+<img width="1440" height="778" alt="Screenshot 2026-03-04 at 00 24 31" src="https://github.com/user-attachments/assets/262ae481-a50d-4f5b-8667-7be1da69fcb0" />
 
 Hey there! 👋 We're super excited to share DevQuiz, our project for learning and testing our knowledge on various topics, especially with a cool AI twist! We poured a lot of effort (and maybe a few late nights 😅) into making this happen.
 
@@ -11,10 +21,10 @@ DevQuiz is a web application designed to enhance learning and self-assessment by
 Key Features:
 *   **AI-Powered Quiz Generation**: Input your study notes, and our awesome AI (powered by Gemini) generates multiple-choice quizzes tailored to your content.
 *   **Interactive Quizzing**: Take quizzes on AI-generated questions to test and solidify your knowledge.
-*   **User Performance Tracking**: Track your quiz history, view performance analytics, and manage all your created quizzes in one centralized dashboard.
-*   **Authentication & Authorization**: Secure user login and role-based access (e.g., admin functionalities for user management).
+*   **User Performance Tracking**: Track your quiz history, view performance analytics, and manage all your created quizzes in one centralised dashboard.
+*   **Authentication & Authorisation**: Secure user login and role-based access (e.g., admin functionalities for user management).
 *   **Dark Mode Toggle**: A user-friendly dark mode ensures comfortable viewing in various lighting conditions.
-*   **Responsive Design**: Optimized for a seamless experience across different devices and screen sizes.
+*   **Responsive Design**: Optimised for a seamless experience across different devices and screen sizes.
 
 ## Our Journey & What We Learned 🛠️
 
