@@ -3,11 +3,11 @@
 https://github.com/darunbjork/DevQuiz
 
 <img width="1440" height="644" alt="Screenshot 2026-03-04 at 00 23 00" src="https://github.com/user-attachments/assets/e25d6ff7-9523-4566-9cba-d256b865d05c" />
+<img width="1440" height="779" alt="Screenshot 2026-03-04 at 00 37 33" src="https://github.com/user-attachments/assets/ae4e973e-d207-4187-80c4-ccc950ac2664" />
 <img width="1440" height="781" alt="Screenshot 2026-03-04 at 00 23 29" src="https://github.com/user-attachments/assets/f775ad90-fb91-44e4-99b1-d5aaaa8304bb" />
 <img width="1440" height="776" alt="Screenshot 2026-03-04 at 00 24 09" src="https://github.com/user-attachments/assets/d172cc79-634b-4f9f-bee3-338b6366dfda" />
 <img width="1440" height="777" alt="Screenshot 2026-03-04 at 00 26 12" src="https://github.com/user-attachments/assets/eb3ac283-1549-4041-baeb-bd72bfe85495" />
 <img width="1440" height="778" alt="Screenshot 2026-03-04 at 00 24 31" src="https://github.com/user-attachments/assets/eca13b0d-44b6-4acc-b466-6fa0c3889b7e" />
-<img width="1440" height="779" alt="Screenshot 2026-03-04 at 00 37 33" src="https://github.com/user-attachments/assets/ae4e973e-d207-4187-80c4-ccc950ac2664" />
 <img width="1440" height="778" alt="Screenshot 2026-03-04 at 00 37 10" src="https://github.com/user-attachments/assets/e1e3f250-1063-48ba-9f87-1b57674e3483" />
 <img width="1440" height="777" alt="Screenshot 2026-03-04 at 00 36 31" src="https://github.com/user-attachments/assets/79de0155-a5b3-4a5d-96a3-6d8b0b4e2dfe" />
 <img width="1440" height="778" alt="Screenshot 2026-03-04 at 00 36 15" src="https://github.com/user-attachments/assets/270ef977-2d00-4b47-b1ef-d650eedc4a45" />
