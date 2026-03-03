@@ -35,7 +35,7 @@ const QuestionDisplay = ({
                   : ""
               }`}
             >
-              ✓
+              {selectedAnswers[currentQuestionIndex] === index && "✓"}
             </div>
             <span>{option}</span>
           </div>

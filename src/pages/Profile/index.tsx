@@ -29,7 +29,7 @@ function Profile() {
   // If `auth.user` exists, it then tries to get `auth.user.name`.
   // If `auth.user` does NOT exist, it stops there and the whole expression becomes `undefined`,
   // preventing a potential error if `auth.user` were null or undefined.
-  const [editName, setEditName] = useState(auth.user?.name || "");
+  const [editUsername, setEditUsername] = useState(auth.user?.username || "");
   const [activeTab, setActiveTab] = useState<"history" | "analytics">(
     "history"
   );
@@ -61,7 +61,7 @@ function Profile() {
 
   return (
     <div className="profile-container fade-in">
-      <ProfileHeader name={auth.user.name} />
+      <ProfileHeader username={auth.user.username} />
 
       <ProfileStatsGrid
         quizzesCreated={createdQuizzes.length}
@@ -148,8 +148,8 @@ function Profile() {
       )}
 
       <EditProfileForm
-        editName={editName}
-        setEditName={setEditName}
+        editUsername={editUsername}
+        setEditUsername={setEditUsername}
         userEmail={auth.user.email}
         onUpdateProfile={auth.updateProfile}
       />

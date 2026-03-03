@@ -4,7 +4,7 @@ import Button from "../Button";
 
 interface QuizHistoryCardProps {
   result: SavedQuizResult;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 const QuizHistoryCard = ({ result, onDelete }: QuizHistoryCardProps) => (

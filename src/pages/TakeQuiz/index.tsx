@@ -30,7 +30,7 @@ function QuizPlayer({ quiz }: { quiz: Quiz }) {
 
   const handleSubmit = () => {
     const answers: UserAnswer[] = quiz.questions.map((question, index) => ({
-      questionId: Date.now() + index,
+      questionId: question.id,
       question: question.question,
       selectedAnswer: selectedAnswers[index],
       correctAnswer: question.correctAnswer,
@@ -107,7 +107,7 @@ function TakeQuiz() {
   const auth = useAuth();
 
   const quiz = auth.user?.createdQuizzes?.find(
-    (q: Quiz) => q.id === parseInt(quizId || "")
+    (q: Quiz) => q.id === quizId
   );
 
   if (!quiz) {

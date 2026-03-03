@@ -38,7 +38,7 @@ export const parseQuizText = (text: string): QuizQuestion[] => {
       // If a previous question was being built and has all its parts, add it to the questions array.
       if (currentQuestion && currentQuestion.question && options.length === 4) {
         questions.push({
-          id: Date.now() + questions.length, // Assign a unique ID to the question.
+          id: (Date.now() + questions.length).toString(), // Assign a unique ID to the question.
           question: currentQuestion.question,
           options: [...options], // Clone the options array.
           correctAnswer: currentQuestion.correctAnswer || 0, // Default to 0 if correct answer not found.
@@ -71,7 +71,7 @@ export const parseQuizText = (text: string): QuizQuestion[] => {
   // After the loop, add the last question if it was being built and is complete.
   if (currentQuestion && currentQuestion.question && options.length === 4) {
     questions.push({
-      id: Date.now() + questions.length,
+      id: (Date.now() + questions.length).toString(),
       question: currentQuestion.question,
       options: [...options],
       correctAnswer: currentQuestion.correctAnswer || 0,

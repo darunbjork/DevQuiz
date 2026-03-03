@@ -3,36 +3,35 @@ import Button from "../Button";
 
 interface EditProfileFormProps {
   /**
-   * The current name value being edited. This is a required string.
+   * The current username value being edited. This is a required string.
    */
-  editName: string;
-  setEditName: (name: string) => void;
+  editUsername: string;
+  setEditUsername: (username: string) => void;
   userEmail: string;
   /**
    * Callback function to update the user profile.
    * The `data` object contains properties to update.
-   * `name?: string` indicates that the 'name' property is optional.
-   * If `name` is not provided in `data`, its value will be `undefined` (not `null`).
+   * `username?: string` indicates that the 'username' property is optional.
    */
-  onUpdateProfile: (data: { name?: string }) => void;
+  onUpdateProfile: (data: { username?: string }) => void;
 }
 
 const EditProfileForm = ({
-  editName,
-  setEditName,
+  editUsername,
+  setEditUsername,
   userEmail,
   onUpdateProfile,
 }: EditProfileFormProps) => (
   <Card title="Edit Profile">
     <div className="edit-profile">
       <div>
-        <label className="edit-label">Name</label>
+        <label className="edit-label">Username</label>
         <input
           type="text"
           className="edit-input"
-          value={editName}
-          onChange={(e) => setEditName(e.target.value)}
-          placeholder="Your name"
+          value={editUsername}
+          onChange={(e) => setEditUsername(e.target.value)}
+          placeholder="Your username"
         />
       </div>
 
@@ -46,8 +45,8 @@ const EditProfileForm = ({
         />
       </div>
 
-      <Button onClick={() => onUpdateProfile({ name: editName })}>
-        Update Name
+      <Button onClick={() => onUpdateProfile({ username: editUsername })}>
+        Update Username
       </Button>
     </div>
   </Card>

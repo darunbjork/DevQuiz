@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { AuthContext } from './AuthContext';
 
 interface ThemeContextType {
   theme: 'light' | 'dark';
@@ -8,10 +9,15 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+  const auth = useContext(AuthContext);
+  
+  const [localTheme, setLocalTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('theme');
     return (saved as 'light' | 'dark') || 'light';
   });
+
+  // Use theme from auth if logged in, otherwise use local theme
+  const theme = auth?.user?.settings.theme || localTheme;
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
@@ -23,7 +29,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    if (auth?.user) {
+      auth.toggleTheme();
+    } else {
+      setLocalTheme(prev => prev === 'light' ? 'dark' : 'light');
+    }
   };
 
   return (

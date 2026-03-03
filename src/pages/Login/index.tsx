@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -9,10 +9,18 @@ function Login() {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      navigate("/profile");
+    }
+  }, [auth.isAuthenticated, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    auth.login(email, password);
-    navigate("/profile");
+    const success = await auth.login(email, password);
+    if (success) {
+      navigate("/profile");
+    }
   };
 
   return (

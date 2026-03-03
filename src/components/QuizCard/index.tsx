@@ -5,9 +5,9 @@ import "./QuizCard.css";
 
 interface QuizCardProps {
   quiz: Quiz;
-  onDelete?: (quizId: number) => void;
+  onDelete?: (quizId: string) => void;
   onEdit?: (quiz: Quiz) => void;
-  onTakeQuiz?: (quizId: number) => void;
+  onTakeQuiz?: (quizId: string) => void;
 }
 
 function QuizCard({ quiz, onDelete, onEdit, onTakeQuiz }: QuizCardProps) {

@@ -4,7 +4,7 @@ import QuizHistoryCard from "../QuizHistoryCard";
 
 interface QuizHistoryListProps {
   quizHistory: SavedQuizResult[];
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 const QuizHistoryList = ({ quizHistory, onDelete }: QuizHistoryListProps) => (

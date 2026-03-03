@@ -1,12 +1,12 @@
 interface ProfileHeaderProps {
-  name: string;
+  username: string;
 }
 
-const ProfileHeader = ({ name }: ProfileHeaderProps) => (
+const ProfileHeader = ({ username }: ProfileHeaderProps) => (
   <div className="profile-header">
     <div>
       <h1 className="profile-title">Profile</h1>
-      <p className="profile-subtitle">Welcome back, {name}!</p>
+      <p className="profile-subtitle">Welcome back, {username}!</p>
     </div>
   </div>
 );

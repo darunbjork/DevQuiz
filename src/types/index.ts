@@ -1,5 +1,55 @@
+export interface QuizOptionBackend {
+  text: string;
+  isCorrect: boolean;
+}
+
+export interface QuizQuestionBackend {
+  _id?: string;
+  id?: string;
+  questionText?: string;
+  question?: string; // This is for the AI generated quiz which has 'question' instead of 'questionText'
+  options: (string | QuizOptionBackend)[];
+  correctAnswer?: number; // Index
+  correctAnswerIndex?: number;
+}
+
+export interface QuizBackend {
+  date: string | undefined;
+  topic: string;
+  difficulty: string;
+  _id?: string;
+  id?: string;
+  title: string;
+  description: string;
+  userId: string;
+  source: 'ai';
+  noteText?: string;
+  createdAt?: string;
+  questions: QuizQuestionBackend[];
+}
+
+export interface SavedQuizAttemptAnswerBackend {
+  questionId: string;
+  questionText?: string;
+  selectedOption: string; // The text of the option
+  isCorrect: boolean;
+}
+
+export interface SavedQuizAttemptBackend {
+  _id?: string;
+  id?: string;
+  quizId: string;
+  quizTitle?: string;
+  score: number;
+  totalQuestions: number;
+  answers: SavedQuizAttemptAnswerBackend[];
+  startTime?: string;
+  date?: string;
+}
+
+
 export interface QuizQuestion {
-  id: number;
+  id: string;
   question: string;
   options: string[];
   correctAnswer: number; 
@@ -12,15 +62,15 @@ export interface NewQuiz {
 }
 
 export interface Quiz extends NewQuiz {
-  id: number;
+  id: string;
   date: string;
-  userId: number;
+  userId: string;
   source: 'ai'; 
   noteText?: string; 
 }
 
 export interface UserAnswer {
-  questionId: number;
+  questionId: string;
   question: string;
   selectedAnswer: number;
   correctAnswer: number;
@@ -28,8 +78,8 @@ export interface UserAnswer {
 }
 
 export interface SavedQuizResult {
-  id: number;
-  quizId: number;
+  id: string;
+  quizId: string;
   quizTitle: string;
   score: number;
   totalQuestions: number;
@@ -43,26 +93,27 @@ export interface UserSettings {
 }
 
 export interface User {
-  id: number;
-  name: string;
+  id: string;
+  username: string;
   email: string;
-  password: string;
+  role: 'admin' | 'user';
   quizzes: SavedQuizResult[]; 
   createdQuizzes: Quiz[];
   settings: UserSettings;
 }
 
 export interface AuthContextType {
+  token: string | null;
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => boolean;
-  signup: (name: string, email: string, password: string) => boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  signup: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
-  updateProfile: (updatedData: Partial<User>) => void;
-  deleteQuiz: (quizId: number) => void;
-  addCreatedQuiz: (quizData: NewQuiz) => void;
-  updateQuiz: (quizId: number, updatedQuiz: Partial<Quiz>) => void;
-  deleteCreatedQuiz: (quizId: number) => void;
-  saveQuizResult: (result: Omit<SavedQuizResult, 'id' | 'date'>) => void;
+  updateProfile: (updatedData: Partial<User>) => Promise<void>;
+  deleteQuiz: (quizId: string) => Promise<void>;
+  addCreatedQuiz: (quizData: NewQuiz) => Promise<void>;
+  updateQuiz: (quizId: string, updatedQuiz: Partial<Quiz>) => Promise<void>;
+  deleteCreatedQuiz: (quizId: string) => Promise<void>;
+  saveQuizResult: (result: Omit<SavedQuizResult, 'id' | 'date'>) => Promise<void>;
   toggleTheme: () => void;
 }
