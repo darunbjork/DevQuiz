@@ -28,7 +28,7 @@ const AdminPanel = () => {
     } finally {
       setLoading(false);
     }
-  }, [token, user?.role]);
+  }, [token, user?.role, adminService.getAllUsers]);
 
   const handleChangeRole = async (userId: string, currentRole: 'admin' | 'user') => {
     if (!token) {
@@ -39,7 +39,7 @@ const AdminPanel = () => {
     const newRole = currentRole === 'admin' ? 'user' : 'admin';
 
     try {
-      await adminService.changeUserRole(userId, newRole, token);
+      await adminService.updateUserRole(userId, newRole, token);
       toast.success(`User role changed to ${newRole} successfully!`);
       fetchUsers(); // Re-fetch users to update the UI
     } catch (err) {
