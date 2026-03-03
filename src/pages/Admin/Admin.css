@@ -1,0 +1,10 @@
+/* src/pages/Admin/Admin.css */
+
+.admin-panel-container {
+  /* This is an example style. The page already uses Tailwind CSS for most styling. */
+  /* You can add custom styles here that are not easily achievable with Tailwind utility classes. */
+  background-color: var(--color-background-soft); /* Using a CSS variable for theme compatibility */
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
