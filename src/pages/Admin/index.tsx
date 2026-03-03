@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import type { User } from '../../types';
 import { adminService } from '../../services/adminService';
 import { useAuth } from '../../hooks/useAuth';
+import './Admin.css';
 
 const AdminPanel = () => {
   const { user, token } = useAuth();
@@ -71,74 +72,68 @@ const AdminPanel = () => {
   }, [fetchUsers]);
 
   if (loading) {
-    return <div className="text-center mt-8">Loading users...</div>;
+    return <div className="admin-message">Loading users...</div>;
   }
 
   if (error) {
-    return <div className="text-center mt-8 text-red-500">{error}</div>;
+    return <div className="admin-message admin-error-message">{error}</div>;
   }
 
   if (!user || user.role !== 'admin') {
-    return <div className="text-center mt-8 text-red-500">Access Denied: Only administrators can view this page.</div>;
+    return <div className="admin-message admin-error-message">Access Denied: Only administrators can view this page.</div>;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">Admin Panel - User Management</h1>
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden">
-        <table className="min-w-full leading-normal">
+<div className="admin-panel-container">
+      <h1 className="admin-title">Admin Panel - User Management</h1>
+      <div className="admin-table-wrapper">
+        <table className="admin-table">
           <thead>
-            <tr className="bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-gray-700 dark:to-gray-900 text-white">
-              <th className="px-6 py-3 border-b-2 border-indigo-700 dark:border-gray-600 text-left text-xs font-semibold uppercase tracking-wider">
+            <tr className="admin-table-header-row">
+              <th className="admin-table-header-cell">
                 Username
               </th>
-              <th className="px-6 py-3 border-b-2 border-indigo-700 dark:border-gray-600 text-left text-xs font-semibold uppercase tracking-wider">
+              <th className="admin-table-header-cell">
                 Email
               </th>
-              <th className="px-6 py-3 border-b-2 border-indigo-700 dark:border-gray-600 text-left text-xs font-semibold uppercase tracking-wider">
+              <th className="admin-table-header-cell">
                 Role
               </th>
-              <th className="px-6 py-3 border-b-2 border-indigo-700 dark:border-gray-600 text-left text-xs font-semibold uppercase tracking-wider">
+              <th className="admin-table-header-cell">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
             {users.map((u, index) => (
-              <tr key={u.id} className={`transition-colors duration-200 ${index % 2 === 0 ? 'bg-gray-50 dark:bg-gray-700' : 'bg-white dark:bg-gray-800'} hover:bg-gray-100 dark:hover:bg-gray-600`}>
-                <td className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-sm">
-                  <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{u.username}</p>
+              <tr key={u.id} className={`admin-table-row ${index % 2 === 0 ? 'admin-table-row--even' : 'admin-table-row--odd'}`}>
+                <td className="admin-table-cell">
+                  <p className="admin-table-cell-text">{u.username}</p>
                 </td>
-                <td className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-sm">
-                  <p className="text-gray-900 dark:text-gray-100 whitespace-no-wrap">{u.email}</p>
+                <td className="admin-table-cell">
+                  <p className="admin-table-cell-text">{u.email}</p>
                 </td>
-                <td className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-sm">
+                <td className="admin-table-cell">
                   <span
-                    className={`relative inline-block px-3 py-1 font-semibold leading-tight rounded-full ${
-                      u.role === 'admin'
-                        ? 'bg-green-200 text-green-900 dark:bg-green-700 dark:text-green-100'
-                        : 'bg-blue-200 text-blue-900 dark:bg-blue-700 dark:text-blue-100'
+                    className={`admin-role-badge ${
+                      u.role === 'admin' ? 'admin-role-badge--admin' : 'admin-role-badge--user'
                     }`}
                   >
                     <span className="relative">{u.role}</span>
                   </span>
                 </td>
-                <td className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 text-sm">
+                <td className="admin-table-cell">
                   {user?.id !== u.id && ( // Prevent admin from changing their own role
-                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                    <div className="admin-actions">
                       <button
                         onClick={() => handleChangeRole(u.id, u.role)}
-                        className="px-4 py-2 rounded-lg font-medium text-white transition-colors duration-200
-                                   bg-indigo-500 hover:bg-indigo-600
-                                   dark:bg-indigo-700 dark:hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                        className="admin-action-button admin-action-button--promote"
                       >
                         {u.role === 'admin' ? 'Demote to User' : 'Promote to Admin'}
                       </button>
                       <button
                         onClick={() => handleDeleteUser(u.id, u.username)}
-                        className="px-4 py-2 rounded-lg font-medium text-white transition-colors duration-200
-                                   bg-red-500 hover:bg-red-600
-                                   dark:bg-red-700 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                        className="admin-action-button admin-action-button--delete"
                       >
                         Delete User
                       </button>
