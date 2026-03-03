@@ -1,0 +1,217 @@
+/* src/pages/Admin/Admin.css */
+
+/* Admin Panel Container */
+.admin-panel-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4); /* py-8 px-4 */
+}
+
+/* Loading/Error Messages */
+.admin-message {
+  text-align: center;
+  margin-top: var(--space-6); /* mt-8 */
+}
+
+.admin-error-message {
+  color: #ef4444; /* text-red-500 */
+}
+
+/* Page Title */
+.admin-title {
+  font-size: 2rem; /* text-3xl, adjusted for consistency with Home.css title */
+  font-weight: 700; /* font-bold */
+  margin-bottom: var(--space-5); /* mb-6 */
+  text-align: center;
+  color: var(--color-text-on-light-bg); /* text-gray-900 */
+}
+
+body.dark-mode .admin-title {
+  color: var(--color-text); /* dark:text-gray-100 */
+}
+
+/* Table Wrapper */
+.admin-table-wrapper {
+  background-color: var(--color-bg-card); /* bg-white */
+  box-shadow: var(--shadow-lg); /* shadow-lg */
+  border-radius: var(--radius-lg); /* rounded-xl */
+  overflow: hidden;
+}
+
+body.dark-mode .admin-table-wrapper {
+  background-color: var(--color-bg-card); /* dark:bg-gray-800, which is var(--color-bg-card) in dark mode */
+}
+
+/* Table */
+.admin-table {
+  min-width: 100%;
+  line-height: normal; /* leading-normal */
+  border-collapse: collapse; /* Ensure borders are handled well */
+}
+
+/* Table Header Row */
+.admin-table-header-row {
+  background: linear-gradient(to right, #3b82f6, #6366f1); /* from-blue-500 to-indigo-600 */
+  color: white; /* text-white */
+}
+
+body.dark-mode .admin-table-header-row {
+  background: linear-gradient(to right, #374151, #111827); /* dark:from-gray-700 dark:to-gray-900 */
+}
+
+/* Table Header Cells */
+.admin-table-header-cell {
+  padding: var(--space-3) var(--space-5); /* px-6 py-3 */
+  border-bottom: 2px solid #4338ca; /* border-b-2 border-indigo-700 */
+  text-align: left;
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600; /* font-semibold */
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* tracking-wider */
+}
+
+body.dark-mode .admin-table-header-cell {
+  border-bottom-color: #4b5563; /* dark:border-gray-600 */
+}
+
+/* Table Body Rows */
+.admin-table-row {
+  transition: background-color var(--transition-fast);
+}
+
+.admin-table-row--even {
+  background-color: #f9fafb; /* bg-gray-50 */
+}
+
+body.dark-mode .admin-table-row--even {
+  background-color: #374151; /* dark:bg-gray-700 */
+}
+
+.admin-table-row--odd {
+  background-color: var(--color-bg); /* bg-white */
+}
+
+body.dark-mode .admin-table-row--odd {
+  background-color: #1f2937; /* dark:bg-gray-800 */
+}
+
+.admin-table-row:hover {
+  background-color: #f3f4f6; /* hover:bg-gray-100 */
+}
+
+body.dark-mode .admin-table-row:hover {
+  background-color: #4b5563; /* dark:hover:bg-gray-600 */
+}
+
+/* Table Data Cells */
+.admin-table-cell {
+  padding: var(--space-4) var(--space-5); /* px-6 py-4 */
+  border-bottom: 1px solid #e5e7eb; /* border-b border-gray-200 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+body.dark-mode .admin-table-cell {
+  border-bottom-color: #374151; /* dark:border-gray-700 */
+}
+
+/* Table Cell Text */
+.admin-table-cell-text {
+  color: var(--color-text-on-light-bg); /* text-gray-900 */
+  white-space: nowrap; /* whitespace-no-wrap */
+}
+
+body.dark-mode .admin-table-cell-text {
+  color: var(--color-text); /* dark:text-gray-100 */
+}
+
+/* Role Badges */
+.admin-role-badge {
+  position: relative;
+  display: inline-block;
+  padding: var(--space-1) var(--space-3); /* px-3 py-1 */
+  font-weight: 600; /* font-semibold */
+  line-height: 1.25; /* leading-tight */
+  border-radius: var(--radius-pill); /* rounded-full */
+}
+
+.admin-role-badge--admin {
+  background-color: #d1fae5; /* bg-green-200 */
+  color: #065f46; /* text-green-900 */
+}
+
+body.dark-mode .admin-role-badge--admin {
+  background-color: #047857; /* dark:bg-green-700 */
+  color: #dcfce7; /* dark:text-green-100 */
+}
+
+.admin-role-badge--user {
+  background-color: #dbeafe; /* bg-blue-200 */
+  color: #1e3a8a; /* text-blue-900 */
+}
+
+body.dark-mode .admin-role-badge--user {
+  background-color: #1d4ed8; /* dark:bg-blue-700 */
+  color: #bfdbfe; /* dark:text-blue-100 */
+}
+
+/* Admin Actions Container */
+.admin-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2); /* space-y-2 */
+}
+
+@media (min-width: 640px) { /* sm breakpoint */
+  .admin-actions {
+    flex-direction: row;
+    gap: var(--space-2); /* sm:space-x-2 and sm:space-y-0 */
+  }
+}
+
+/* Admin Action Buttons */
+.admin-action-button {
+  padding: var(--space-2) var(--space-4); /* px-4 py-2 */
+  border-radius: var(--radius-md); /* rounded-lg */
+  font-weight: 500; /* font-medium */
+  color: white;
+  transition: background-color var(--transition-fast);
+  border: none; /* remove default button border */
+  cursor: pointer;
+  outline: none;
+}
+
+.admin-action-button:focus {
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5); /* focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 (simplified) */
+}
+
+.admin-action-button--promote {
+  background-color: #6366f1; /* bg-indigo-500 */
+}
+
+.admin-action-button--promote:hover {
+  background-color: #4f46e5; /* hover:bg-indigo-600 */
+}
+
+body.dark-mode .admin-action-button--promote {
+  background-color: #4338ca; /* dark:bg-indigo-700 */
+}
+
+body.dark-mode .admin-action-button--promote:hover {
+  background-color: #3730a3; /* dark:hover:bg-indigo-800 */
+}
+
+.admin-action-button--delete {
+  background-color: #ef4444; /* bg-red-500 */
+}
+
+.admin-action-button--delete:hover {
+  background-color: #dc2626; /* hover:bg-red-600 */
+}
+
+body.dark-mode .admin-action-button--delete {
+  background-color: #b91c1c; /* dark:bg-red-700 */
+}
+
+body.dark-mode .admin-action-button--delete:hover {
+  background-color: #991b1b; /* dark:hover:bg-red-800 */
+}
