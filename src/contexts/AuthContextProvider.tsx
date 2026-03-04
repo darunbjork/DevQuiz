@@ -12,7 +12,8 @@ import type {
 } from '../types';
 import { mapQuiz } from '../utils/quizMapper'; // Import mapQuiz from types
 import { AuthContext } from './AuthContext';
-import { API_BASE_URL } from '../config/api';
+
+import { apiClient } from '../services/apiClient';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -29,13 +30,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const loadMe = useCallback(
-    async (accessToken: string) => {
+    async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-          },
-        });
+        // apiClient will automatically add the Authorization header if a token is present via its getter
+        const response = await apiClient.fetchWithAuth('/api/auth/me', {});
 
         if (response.ok) {
           const userData = await response.json();
@@ -81,29 +79,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           sessionStorage.setItem('user', JSON.stringify(user));
           setIsAuthenticated(true);
         } else {
-          logout();
+          logout(); // This will be called if loadMe fails, e.g., token invalid/expired
         }
       } catch (error) {
         console.error('Failed to load user data:', error);
-        logout();
+        logout(); // Ensure logout on any error during loadMe
       }
     },
     [logout]
   );
 
+  // Configure apiClient with auth callbacks
+  useEffect(() => {
+    apiClient.configureAuth(
+      () => token, // Getter for current token
+      setToken,    // Setter for token state
+      logout       // Logout callback
+    );
+  }, [token, setToken, logout]); // token is included so apiClient always has the latest token
+
   useEffect(() => {
     const storedToken = sessionStorage.getItem('accessToken');
-
-    if (storedToken && !token) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (storedToken) { // Only set if stored, don't re-set if token already exists
       setToken(storedToken);
-      loadMe(storedToken);
     }
-  }, [loadMe, token]);
+  }, []); // Only runs once on mount
+
+// New useEffect to load user data when token becomes available
+  useEffect(() => {
+    if (token) {
+      loadMe();
+    }
+  }, [token, loadMe]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      // apiClient.fetchWithAuth will not add Authorization header if token is null
+      // credentials: 'include' is automatically added by apiClient
+      const response = await apiClient.fetchWithAuth('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,14 +131,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       const data = await response.json();
-      setToken(data.token);
-      sessionStorage.setItem('accessToken', data.token);
+      const newToken = data.token; // Correctly extract 'token'
+      setToken(newToken); // Update state
 
-      await loadMe(data.token);
+      // IMMEDIATELY re-configure apiClient with the new token
+      apiClient.configureAuth(
+        () => newToken, // The getter returns this fresh token
+        setToken,
+        logout
+      );
+
+      sessionStorage.setItem('accessToken', newToken); // Store accessToken
+
+      await loadMe(); // Now loadMe uses apiClient configured with the fresh token
 
       toast.success(`Welcome back!`);
       return true;
-    } catch (error) {
+    } catch (error)
+    {
       console.error('Login error:', error);
       toast.error('An unexpected error occurred during login.');
       return false;
@@ -134,7 +157,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = async (name: string, email: string, password: string): Promise<boolean> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+      // credentials: 'include' is automatically added by apiClient
+      const response = await apiClient.fetchWithAuth('/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -161,11 +185,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/profile`, {
+      const response = await apiClient.fetchWithAuth('/api/auth/profile', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(updatedData),
       });
@@ -176,7 +199,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      await loadMe(token);
+      await loadMe();
       toast.success('Profile updated!');
     } catch (error) {
       console.error('Update profile error:', error);
@@ -188,15 +211,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/attempts/${quizId}`, {
+      // apiClient will add Authorization header and credentials: 'include'
+      const response = await apiClient.fetchWithAuth(`/api/attempts/${quizId}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
       });
 
       if (response.ok) {
-        await loadMe(token);
+        await loadMe();
         toast.success('Quiz result deleted');
       } else {
         toast.error('Failed to delete quiz result');
@@ -224,23 +245,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         })),
       };
 
-      const response = await fetch(`${API_BASE_URL}/api/quizzes`, {
+      // apiClient will add Authorization header and credentials: 'include'
+      const response = await apiClient.fetchWithAuth('/api/quizzes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        await loadMe(token);
-        toast.success('Quiz created successfully!');
+      if (!response.ok) { // Check for !response.ok after apiClient change
+        const errorData = await response.json(); // Safely parse error data
+        toast.error(errorData.message || 'Failed to create quiz');
       } else {
-        toast.error('Failed to create quiz');
+        await loadMe();
+        toast.success('Quiz created successfully!');
       }
     } catch (error) {
       console.error('Add quiz error:', error);
+      toast.error('An unexpected error occurred while adding quiz.'); // Added toast.error
     }
   };
 
@@ -263,21 +286,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }));
       }
 
-      const response = await fetch(`${API_BASE_URL}/api/quizzes/${quizId}`, {
+      // apiClient will add Authorization header and credentials: 'include'
+      const response = await apiClient.fetchWithAuth(`/api/quizzes/${quizId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        await loadMe(token);
+      if (!response.ok) { // Check for !response.ok after apiClient change
+        const errorData = await response.json(); // Safely parse error data
+        toast.error(errorData.message || 'Failed to update quiz');
+      } else {
+        await loadMe();
         toast.success('Quiz updated!');
       }
     } catch (error) {
       console.error('Update quiz error:', error);
+      toast.error('An unexpected error occurred while updating quiz.'); // Added toast.error
     }
   };
 
@@ -285,19 +312,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/quizzes/${quizId}`, {
+      // apiClient will add Authorization header and credentials: 'include'
+      const response = await apiClient.fetchWithAuth(`/api/quizzes/${quizId}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
       });
 
-      if (response.ok) {
-        await loadMe(token);
+      if (!response.ok) { // Check for !response.ok after apiClient change
+        const errorData = await response.json(); // Safely parse error data
+        toast.error(errorData.message || 'Failed to delete quiz');
+      } else {
+        await loadMe();
         toast.success('Quiz deleted');
       }
     } catch (error) {
       console.error('Delete created quiz error:', error);
+      toast.error('An unexpected error occurred while deleting quiz.'); // Added toast.error
     }
   };
 
@@ -316,17 +345,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         })),
       };
 
-      const response = await fetch(`${API_BASE_URL}/api/attempts`, {
+      // apiClient will add Authorization header and credentials: 'include'
+      const response = await apiClient.fetchWithAuth('/api/attempts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        await loadMe(token);
+      if (!response.ok) { // Check for !response.ok after apiClient change
+        const errorData = await response.json(); // Safely parse error data
+        toast.error(errorData.message || 'Failed to save quiz results');
+      } else {
+        await loadMe();
 
         const percentage = (result.score / result.totalQuestions) * 100;
         if (percentage >= 80) {
@@ -336,9 +368,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else {
           toast.warn(`Keep practicing! You scored ${percentage.toFixed(0)}%`);
         }
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.message || 'Failed to save quiz results');
       }
     } catch (error) {
       console.error('Save quiz result error:', error);
@@ -351,6 +380,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const newTheme: 'light' | 'dark' = user.settings.theme === 'light' ? 'dark' : 'light';
     const updatedSettings = { ...user.settings, theme: newTheme };
+    // updateProfile already uses apiClient.fetchWithAuth
     updateProfile({ settings: updatedSettings });
   };
 
@@ -378,4 +408,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 }
 // eslint-disable-next-line react-refresh/only-export-components
 export { AuthContext, mapQuiz };
-

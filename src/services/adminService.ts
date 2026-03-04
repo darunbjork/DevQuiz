@@ -1,12 +1,9 @@
-import { API_BASE_URL } from '../config/api';
+import { apiClient } from './apiClient'; // Import apiClient
 import type { User } from '../types';
 
 export const adminService = {
-  getAllUsers: async (token: string): Promise<User[]> => {
-    const response = await fetch(`${API_BASE_URL}/api/admin/users`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
+  getAllUsers: async (): Promise<User[]> => { // Removed token parameter
+    const response = await apiClient.fetchWithAuth('/api/admin/users', { // Use apiClient
     });
 
     if (!response.ok) {
@@ -18,12 +15,11 @@ export const adminService = {
     return users;
   },
 
-  updateUserRole: async (userId: string, role: 'admin' | 'user', token: string): Promise<User> => {
-    const response = await fetch(`${API_BASE_URL}/api/admin/users/${userId}/role`, {
+  updateUserRole: async (userId: string, role: 'admin' | 'user'): Promise<User> => { // Removed token parameter
+    const response = await apiClient.fetchWithAuth(`/api/admin/users/${userId}/role`, { // Use apiClient
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({ role }),
     });
@@ -37,14 +33,13 @@ export const adminService = {
     return updatedUser;
   },
 
-  deleteUser: async (userId: string, token: string): Promise<{ message: string }> => {
-    const response = await fetch(`${API_BASE_URL}/api/admin/users/${userId}`, {
+  deleteUser: async (userId: string): Promise<{ message: string }> => { // Removed token parameter
+    const response = await apiClient.fetchWithAuth(`/api/admin/users/${userId}`, { // Use apiClient
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json', // Add Content-Type header
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id: userId }), // Send userId in the body
+      body: JSON.stringify({ id: userId }),
     });
 
     if (!response.ok) {
