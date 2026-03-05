@@ -101,6 +101,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const storedToken = sessionStorage.getItem('accessToken');
     if (storedToken) { // Only set if stored, don't re-set if token already exists
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setToken(storedToken);
     }
   }, []); // Only runs once on mount
@@ -108,6 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 // New useEffect to load user data when token becomes available
   useEffect(() => {
     if (token) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       loadMe();
     }
   }, [token, loadMe]);
