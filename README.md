@@ -80,7 +80,7 @@ This project is a frontend application that interacts with a separate backend AP
     *   **Gemini API Key**: Obtain a Gemini API key from Google AI Studio.
     *   Create a `.env` file in the project root based on `env.example` (or similar template) and populate it:
         ```
-        VITE_API_BASE_URL=http://localhost:3000  # Replace with your backend API URL
+        VITE_API_URL=http://localhost:3000  # Replace with your backend API URL
         VITE_GEMINI_API_KEY=YOUR_GEMINI_API_KEY
         ```
 
