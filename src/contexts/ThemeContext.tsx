@@ -16,7 +16,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return (saved as 'light' | 'dark') || 'light';
   });
 
-  // Use theme from auth if logged in, otherwise use local theme
   const theme = auth?.user?.settings.theme || localTheme;
 
   useEffect(() => {

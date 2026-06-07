@@ -1,9 +1,9 @@
-import { apiClient } from './apiClient'; // Import apiClient
+import { apiClient } from './apiClient'; 
 import type { User } from '../types';
 
 export const adminService = {
-  getAllUsers: async (): Promise<User[]> => { // Removed token parameter
-    const response = await apiClient.fetchWithAuth('/api/admin/users', { // Use apiClient
+  getAllUsers: async (): Promise<User[]> => { 
+    const response = await apiClient.fetchWithAuth('/api/admin/users', { 
     });
 
     if (!response.ok) {
@@ -15,8 +15,8 @@ export const adminService = {
     return users;
   },
 
-  updateUserRole: async (userId: string, role: 'admin' | 'user'): Promise<User> => { // Removed token parameter
-    const response = await apiClient.fetchWithAuth(`/api/admin/users/${userId}/role`, { // Use apiClient
+  updateUserRole: async (userId: string, role: 'admin' | 'user'): Promise<User> => { 
+    const response = await apiClient.fetchWithAuth(`/api/admin/users/${userId}/role`, { 
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -33,8 +33,8 @@ export const adminService = {
     return updatedUser;
   },
 
-  deleteUser: async (userId: string): Promise<{ message: string }> => { // Removed token parameter
-    const response = await apiClient.fetchWithAuth(`/api/admin/users/${userId}`, { // Use apiClient
+  deleteUser: async (userId: string): Promise<{ message: string }> => { 
+    const response = await apiClient.fetchWithAuth(`/api/admin/users/${userId}`, { 
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

@@ -20,15 +20,7 @@ import QuizHistoryList from "../../components/QuizHistoryList";
 import EditProfileForm from "../../components/EditProfileForm";
 
 function Profile() {
-  // `useAuth()` is a React Hook. React Hooks must always be called at the
-  // top level of a functional component. This ensures that the Hook
-  // is called consistently every time the component renders, following
-  // React's rules for Hooks.
   const auth = useAuth();
-  // The `?.` (optional chaining operator) checks if `auth.user` exists (is not null or undefined).
-  // If `auth.user` exists, it then tries to get `auth.user.name`.
-  // If `auth.user` does NOT exist, it stops there and the whole expression becomes `undefined`,
-  // preventing a potential error if `auth.user` were null or undefined.
   const [editUsername, setEditUsername] = useState(auth.user?.username || "");
   const [activeTab, setActiveTab] = useState<"history" | "analytics">(
     "history"

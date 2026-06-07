@@ -60,7 +60,6 @@ function QuizPlayer({ quiz }: { quiz: Quiz }) {
     setUserAnswers([]);
   };
 
-  /* RESULTS PAGE */
   if (showResults) {
     return (
       <QuizResultsDisplay
@@ -72,7 +71,6 @@ function QuizPlayer({ quiz }: { quiz: Quiz }) {
     );
   }
 
-  /* QUIZ PLAY PAGE */
   return (
     <div className="takequiz-container">
       <Card>

@@ -20,7 +20,7 @@ const AdminPanel = () => {
 
     try {
       setLoading(true);
-      const fetchedUsers = await adminService.getAllUsers(token);
+      const fetchedUsers = await adminService.getAllUsers();
       setUsers(fetchedUsers);
     } catch (err) {
       console.error('Failed to fetch users:', err);
@@ -40,7 +40,7 @@ const AdminPanel = () => {
     const newRole = currentRole === 'admin' ? 'user' : 'admin';
 
     try {
-      await adminService.updateUserRole(userId, newRole, token);
+      await adminService.updateUserRole(userId, newRole);
       toast.success(`User role changed to ${newRole} successfully!`);
       fetchUsers(); // Re-fetch users to update the UI
     } catch (err) {
@@ -57,7 +57,7 @@ const AdminPanel = () => {
 
     if (window.confirm(`Are you sure you want to delete user "${username}"? This action cannot be undone and will delete all associated data.`)) {
       try {
-        await adminService.deleteUser(userId, token);
+        await adminService.deleteUser(userId);
         toast.success(`User "${username}" deleted successfully!`);
         fetchUsers(); // Re-fetch users to update the UI
       } catch (err) {
@@ -123,7 +123,7 @@ const AdminPanel = () => {
                   </span>
                 </td>
                 <td className="admin-table-cell">
-                  {user?.id !== u.id && ( // Prevent admin from changing their own role
+                  {user?.id !== u.id && ( 
                     <div className="admin-actions">
                       <button
                         onClick={() => handleChangeRole(u.id, u.role)}

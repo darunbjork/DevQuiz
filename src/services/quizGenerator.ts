@@ -1,23 +1,18 @@
 import type { Quiz } from "../types";
-// import { API_BASE_URL } from "../config/api"; // Not needed as apiClient handles base URL
-import { apiClient } from './apiClient'; // Import apiClient
+import { apiClient } from './apiClient'; 
 
 export const generateQuizFromNotes = async (
-  studyNote: string,
-  topic: string,
-  difficulty: string,
-  numQuestions: number,
-  // Removed token parameter
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+studyNote: string, topic: string, difficulty: string, numQuestions: number, _token: string,
 ): Promise<{
   quiz?: Quiz;
   error?: string;
 }> => {
   try {
-    const response = await apiClient.fetchWithAuth('/api/quizzes/generate', { // Use apiClient
+    const response = await apiClient.fetchWithAuth('/api/quizzes/generate', { 
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Removed Authorization header
       },
       body: JSON.stringify({
         studyNote,

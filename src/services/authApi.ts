@@ -11,12 +11,10 @@ export const authApi = {
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include', // Crucial: Ensures HTTP-only refresh token cookie is sent
+      credentials: 'include', 
     });
 
     if (!response.ok) {
-      // If refresh token fails (e.g., expired or invalid), it will return 401
-      // The caller (apiClient) will handle logging out the user in this case.
       throw new Error('Failed to refresh access token');
     }
 

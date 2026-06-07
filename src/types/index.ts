@@ -7,9 +7,9 @@ export interface QuizQuestionBackend {
   _id?: string;
   id?: string;
   questionText?: string;
-  question?: string; // This is for the AI generated quiz which has 'question' instead of 'questionText'
+  question?: string; 
   options: (string | QuizOptionBackend)[];
-  correctAnswer?: number; // Index
+  correctAnswer?: number;
   correctAnswerIndex?: number;
 }
 
@@ -31,7 +31,7 @@ export interface QuizBackend {
 export interface SavedQuizAttemptAnswerBackend {
   questionId: string;
   questionText?: string;
-  selectedOption: string; // The text of the option
+  selectedOption: string; 
   isCorrect: boolean;
 }
 

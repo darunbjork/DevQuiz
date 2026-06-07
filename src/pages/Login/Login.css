@@ -6,10 +6,10 @@
   max-width: 420px;
   margin: 0 auto;
   padding: var(--space-6) var(--space-4);
-  min-height: calc(100vh - 120px); /* Adjust based on navbar height */
+  min-height: calc(100vh - 120px); 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center vertically */
+  justify-content: center; 
   animation: fadeIn 0.6s ease forwards;
 }
 
@@ -29,7 +29,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4); /* Reduced from space-5 */
+  gap: var(--space-4); 
 }
 
 
@@ -49,11 +49,11 @@ body.dark-mode .login-label {
   width: 100%;
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  border: 1px solid #999; /* Darker border for better contrast */
+  border: 1px solid #999; 
   background: var(--color-bg-soft);
   font-size: 1rem;
   transition: var(--transition-fast);
-  color: #333; /* Fixed dark text color for light mode */
+  color: #333; 
 }
 
 .login-input:focus {
@@ -93,9 +93,8 @@ body.dark-mode .login-input {
   transform: scale(0.97);
 }
 
-/* Placeholder color for better visibility */
 .login-input::placeholder {
-  color: #777; /* Darker placeholder for light mode */
+  color: #777; 
   opacity: 0.7;
 }
 
@@ -103,7 +102,6 @@ body.dark-mode .login-input::placeholder {
   color: var(--color-text-light);
 }
 
-/* Add a footer style for the form */
 .login-footer {
   margin-top: var(--space-4);
   text-align: center;

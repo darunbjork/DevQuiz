@@ -9,7 +9,7 @@ import Profile from './pages/Profile';
 import Study from './pages/Study';
 import MyQuizzes from './pages/MyQuizzes';
 import TakeQuiz from './pages/TakeQuiz';
-import AdminPanel from './pages/Admin'; // Import AdminPanel
+import AdminPanel from './pages/Admin';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useTheme } from './contexts/ThemeContext';
 import Footer from './components/Footer';
@@ -58,7 +58,7 @@ function App() {
                 <TakeQuiz />
               </ProtectedRoute>
             } />
-            <Route path="/admin" element={ // Add AdminPanel route
+            <Route path="/admin" element={ 
               <ProtectedRoute adminOnly> 
                 <AdminPanel />
               </ProtectedRoute>

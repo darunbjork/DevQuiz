@@ -18,7 +18,6 @@ function Home() {
         </p>
       </div>
 
-      {/* NEW GET STARTED BUTTON */}
       <button
         className="home-start-btn hover-lift"
         onClick={() => navigate("/study")}

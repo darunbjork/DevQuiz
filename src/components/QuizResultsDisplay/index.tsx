@@ -6,7 +6,7 @@ interface QuizResultsDisplayProps {
   quiz: Quiz;
   userAnswers: UserAnswer[];
   navigate: (path: string) => void;
-  onRetry: () => void; // New prop for retrying the quiz
+  onRetry: () => void; 
 }
 
 const QuizResultsDisplay = ({ quiz, userAnswers, navigate, onRetry }: QuizResultsDisplayProps) => {

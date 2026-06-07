@@ -18,15 +18,15 @@ function Study() {
   const [quizTitle, setQuizTitle] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
   const [topic, setTopic] = useState("");
-  const [difficulty, setDifficulty] = useState("intermediate"); // Default to intermediate
-  const [numQuestions, setNumQuestions] = useState(5); // Default to 5
+  const [difficulty, setDifficulty] = useState("intermediate"); 
+  const [numQuestions, setNumQuestions] = useState(5); 
 
   const auth = useAuth();
   const navigate = useNavigate();
 
   const handleGenerateQuiz = async (notes: string) => {
     setLoading(true);
-    setStudyNote(notes); // Update studyNote state here
+    setStudyNote(notes); 
     setQuizQuestions([]);
 
     if (!auth.token) {
@@ -73,9 +73,9 @@ function Study() {
     setQuizQuestions([]);
     setQuizTitle("");
     setQuizDescription("");
-    setTopic(""); // Clear topic
-    setNumQuestions(5); // Reset numQuestions
-    setDifficulty("intermediate"); // Reset difficulty
+    setTopic(""); 
+    setNumQuestions(5); 
+    setDifficulty("intermediate");
 
     navigate("/my-quizzes");
   };
