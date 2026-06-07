@@ -10,7 +10,7 @@ import type {
   SavedQuizAttemptBackend,
   SavedQuizAttemptAnswerBackend,
 } from '../types';
-import { mapQuiz } from '../utils/quizMapper'; // Import mapQuiz from types
+import { mapQuiz } from '../utils/quizMapper'; 
 import { AuthContext } from './AuthContext';
 
 import { apiClient } from '../services/apiClient';
@@ -32,7 +32,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loadMe = useCallback(
     async () => {
       try {
-        // apiClient will automatically add the Authorization header if a token is present via its getter
         const response = await apiClient.fetchWithAuth('/api/auth/me', {});
 
         if (response.ok) {
@@ -79,34 +78,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           sessionStorage.setItem('user', JSON.stringify(user));
           setIsAuthenticated(true);
         } else {
-          logout(); // This will be called if loadMe fails, e.g., token invalid/expired
+          logout(); 
         }
       } catch (error) {
         console.error('Failed to load user data:', error);
-        logout(); // Ensure logout on any error during loadMe
+        logout();
       }
     },
     [logout]
   );
 
-  // Configure apiClient with auth callbacks
   useEffect(() => {
     apiClient.configureAuth(
-      () => token, // Getter for current token
-      setToken,    // Setter for token state
-      logout       // Logout callback
+      () => token, 
+      setToken,    
+      logout      
     );
-  }, [token, setToken, logout]); // token is included so apiClient always has the latest token
+  }, [token, setToken, logout]); 
 
   useEffect(() => {
     const storedToken = sessionStorage.getItem('accessToken');
-    if (storedToken) { // Only set if stored, don't re-set if token already exists
+    if (storedToken) { 
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setToken(storedToken);
     }
-  }, []); // Only runs once on mount
+  }, []); 
 
-// New useEffect to load user data when token becomes available
+
   useEffect(() => {
     if (token) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -116,8 +114,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      // apiClient.fetchWithAuth will not add Authorization header if token is null
-      // credentials: 'include' is automatically added by apiClient
       const response = await apiClient.fetchWithAuth('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -133,19 +129,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       const data = await response.json();
-      const newToken = data.token; // Correctly extract 'token'
-      setToken(newToken); // Update state
+      const newToken = data.token; 
+      setToken(newToken); 
 
-      // IMMEDIATELY re-configure apiClient with the new token
       apiClient.configureAuth(
-        () => newToken, // The getter returns this fresh token
+        () => newToken, 
         setToken,
         logout
       );
 
-      sessionStorage.setItem('accessToken', newToken); // Store accessToken
+      sessionStorage.setItem('accessToken', newToken); 
 
-      await loadMe(); // Now loadMe uses apiClient configured with the fresh token
+      await loadMe(); 
 
       toast.success(`Welcome back!`);
       return true;
@@ -159,7 +154,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = async (name: string, email: string, password: string): Promise<boolean> => {
     try {
-      // credentials: 'include' is automatically added by apiClient
       const response = await apiClient.fetchWithAuth('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -213,7 +207,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) return;
 
     try {
-      // apiClient will add Authorization header and credentials: 'include'
       const response = await apiClient.fetchWithAuth(`/api/attempts/${quizId}`, {
         method: 'DELETE',
       });
@@ -237,7 +230,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const payload = {
         title: quizData.title,
         description: quizData.description,
-        // Assuming topic and difficulty are part of NewQuiz if AI generated, or added during creation process
         topic: (quizData as QuizBackend).topic || 'General',
         difficulty: (quizData as QuizBackend).difficulty || 'intermediate',
         questions: quizData.questions.map((q) => ({
@@ -247,7 +239,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         })),
       };
 
-      // apiClient will add Authorization header and credentials: 'include'
       const response = await apiClient.fetchWithAuth('/api/quizzes', {
         method: 'POST',
         headers: {
@@ -256,8 +247,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) { // Check for !response.ok after apiClient change
-        const errorData = await response.json(); // Safely parse error data
+      if (!response.ok) { 
+        const errorData = await response.json(); 
         toast.error(errorData.message || 'Failed to create quiz');
       } else {
         await loadMe();
@@ -265,7 +256,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error('Add quiz error:', error);
-      toast.error('An unexpected error occurred while adding quiz.'); // Added toast.error
+      toast.error('An unexpected error occurred while adding quiz.'); 
     }
   };
 
@@ -288,7 +279,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }));
       }
 
-      // apiClient will add Authorization header and credentials: 'include'
       const response = await apiClient.fetchWithAuth(`/api/quizzes/${quizId}`, {
         method: 'PATCH',
         headers: {
@@ -297,8 +287,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) { // Check for !response.ok after apiClient change
-        const errorData = await response.json(); // Safely parse error data
+      if (!response.ok) { 
+        const errorData = await response.json(); 
         toast.error(errorData.message || 'Failed to update quiz');
       } else {
         await loadMe();
@@ -306,7 +296,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error('Update quiz error:', error);
-      toast.error('An unexpected error occurred while updating quiz.'); // Added toast.error
+      toast.error('An unexpected error occurred while updating quiz.'); 
     }
   };
 
@@ -314,13 +304,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!token) return;
 
     try {
-      // apiClient will add Authorization header and credentials: 'include'
       const response = await apiClient.fetchWithAuth(`/api/quizzes/${quizId}`, {
         method: 'DELETE',
       });
 
-      if (!response.ok) { // Check for !response.ok after apiClient change
-        const errorData = await response.json(); // Safely parse error data
+      if (!response.ok) { 
+        const errorData = await response.json(); 
         toast.error(errorData.message || 'Failed to delete quiz');
       } else {
         await loadMe();
@@ -328,7 +317,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error('Delete created quiz error:', error);
-      toast.error('An unexpected error occurred while deleting quiz.'); // Added toast.error
+      toast.error('An unexpected error occurred while deleting quiz.'); 
     }
   };
 
@@ -347,7 +336,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         })),
       };
 
-      // apiClient will add Authorization header and credentials: 'include'
       const response = await apiClient.fetchWithAuth('/api/attempts', {
         method: 'POST',
         headers: {
@@ -356,8 +344,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) { // Check for !response.ok after apiClient change
-        const errorData = await response.json(); // Safely parse error data
+      if (!response.ok) { 
+        const errorData = await response.json();
         toast.error(errorData.message || 'Failed to save quiz results');
       } else {
         await loadMe();
@@ -382,7 +370,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const newTheme: 'light' | 'dark' = user.settings.theme === 'light' ? 'dark' : 'light';
     const updatedSettings = { ...user.settings, theme: newTheme };
-    // updateProfile already uses apiClient.fetchWithAuth
+    
+    // Update local state immediately for a better user experience
+    setUser(prev => prev ? { ...prev, settings: updatedSettings } : null);
+    sessionStorage.setItem('user', JSON.stringify({ ...user, settings: updatedSettings }));
+
     updateProfile({ settings: updatedSettings });
   };
 
@@ -390,7 +382,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     <AuthContext.Provider
       value={{
         user,
-        token, // Expose token
+        token, 
         isAuthenticated,
         login,
         signup,
