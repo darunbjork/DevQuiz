@@ -78,13 +78,12 @@ This project is a frontend application that interacts with a separate backend AP
     *   Node.js (LTS recommended)
     *   A backend API running and accessible (e.g., at `http://localhost:3000`). This repository **does not** include the backend code.
 
-2.  **API Keys & Environment Variables**:
-    *   **Gemini API Key**: Obtain a Gemini API key from Google AI Studio.
-    *   Create a `.env` file in the project root based on `env.example` (or similar template) and populate it:
+2.  **Environment Variables**:
+    *   Create a `.env` file in the project root based on `.env.example`:
         ```
-        VITE_API_URL=http://localhost:3000  # Replace with your backend API URL
-        VITE_GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+        VITE_API_URL=https://devquiz-api-nblo.onrender.com  # Your backend API URL
         ```
+    *   Note: The Gemini API key lives on the **backend**, not in this frontend.
 
 3.  **Clone the repository**:
     ```bash
