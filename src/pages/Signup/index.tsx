@@ -7,6 +7,7 @@ function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -18,9 +19,15 @@ function Signup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await auth.signup(name, email, password);
-    if (success) {
-      navigate("/login");
+    if (submitting) return;
+    setSubmitting(true);
+    try {
+      const success = await auth.signup(name, email, password);
+      if (success) {
+        navigate("/login");
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -62,8 +69,8 @@ function Signup() {
           />
         </div>
 
-        <button type="submit" className="signup-btn hover-lift">
-          Sign Up
+        <button type="submit" className="signup-btn hover-lift" disabled={submitting}>
+          {submitting ? "Creating account…" : "Sign Up"}
         </button>
       </form>
     </div>

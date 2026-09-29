@@ -6,10 +6,10 @@
   max-width: 420px;
   margin: 0 auto;
   padding: var(--space-6) var(--space-4);
-  min-height: calc(100vh - 120px); /* Adjust based on navbar height */
+  min-height: calc(100vh - 120px);
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center vertically */
+  justify-content: center;
   animation: fadeIn 0.6s ease forwards;
 }
 
@@ -18,7 +18,7 @@
   text-align: center;
   font-size: 2rem;
   font-weight: 800;
-  margin-bottom: var(--space-5); /* Reduced from space-6 */
+  margin-bottom: var(--space-5); 
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   background-clip: text;
@@ -29,7 +29,7 @@
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4); /* Reduced from space-5 */
+  gap: var(--space-4); 
 }
 
 
@@ -37,11 +37,11 @@
   font-weight: 600;
   margin-bottom: var(--space-2);
   display: block;
-  color: #333; /* Fixed dark color for light mode */
+  color: #333;
 }
 
 body.dark-mode .signup-label {
-  color: var(--color-text); /* Use theme variable in dark mode */
+  color: var(--color-text);
 }
 
 
@@ -49,11 +49,11 @@ body.dark-mode .signup-label {
   width: 100%;
   padding: var(--space-3);
   border-radius: var(--radius-md);
-  border: 1px solid #999; /* Darker border for better contrast */
+  border: 1px solid #999;
   background: var(--color-bg-soft);
   font-size: 1rem;
   transition: var(--transition-fast);
-  color: #333; /* Fixed dark text color for light mode */
+  color: #333;
 }
 
 .signup-input:focus {
@@ -91,6 +91,13 @@ body.dark-mode .signup-input {
 
 .signup-btn:active {
   transform: scale(0.97);
+}
+
+.signup-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-md);
 }
 
 

@@ -1,5 +1,4 @@
-// Second: AuthContextProvider
-import { useState, useEffect, useCallback, type ReactNode } from 'react';
+import { useState, useEffect, useCallback, useRef, type ReactNode } from 'react';
 import { toast } from 'react-toastify';
 import type {
   User,
@@ -20,17 +19,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const logout = useCallback(() => {
+  const clearSession = useCallback(() => {
     setToken(null);
     setUser(null);
     setIsAuthenticated(false);
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('user');
-    toast.success('Logged out successfully');
   }, []);
 
-  const loadMe = useCallback(
-    async () => {
+  const logout = useCallback(() => {
+    clearSession();
+    toast.success('Logged out successfully');
+  }, [clearSession]);
+
+  const fetchMe = useCallback(
+    async (): Promise<boolean> => {
       try {
         const response = await apiClient.fetchWithAuth('/api/auth/me', {});
 
@@ -77,24 +80,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(user);
           sessionStorage.setItem('user', JSON.stringify(user));
           setIsAuthenticated(true);
-        } else {
-          logout(); 
+          return true;
         }
+
+        clearSession();
+        return false;
       } catch (error) {
         console.error('Failed to load user data:', error);
-        logout();
+        clearSession();
+        return false;
       }
     },
-    [logout]
+    [clearSession]
   );
+
+  const loadMeInFlight = useRef<Promise<boolean> | null>(null);
+  const loadMe = useCallback((): Promise<boolean> => {
+    if (!loadMeInFlight.current) {
+      const request = fetchMe().finally(() => {
+        if (loadMeInFlight.current === request) {
+          loadMeInFlight.current = null;
+        }
+      });
+      loadMeInFlight.current = request;
+    }
+    return loadMeInFlight.current;
+  }, [fetchMe]);
 
   useEffect(() => {
     apiClient.configureAuth(
       () => token, 
       setToken,    
-      logout      
+      clearSession      
     );
-  }, [token, setToken, logout]); 
+  }, [token, setToken, clearSession]);
 
   useEffect(() => {
     const storedToken = sessionStorage.getItem('accessToken');
@@ -106,11 +125,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 
   useEffect(() => {
-    if (token) {
+    if (token && !isAuthenticated) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      loadMe();
+      void loadMe();
     }
-  }, [token, loadMe]);
+  }, [token, isAuthenticated, loadMe]);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
@@ -135,12 +154,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       apiClient.configureAuth(
         () => newToken, 
         setToken,
-        logout
+        clearSession
       );
 
       sessionStorage.setItem('accessToken', newToken); 
 
-      await loadMe(); 
+      const loaded = await loadMe();
+
+      if (!loaded) {
+        toast.error('Signed in, but your account could not be loaded. Please try again.');
+        return false;
+      }
 
       toast.success(`Welcome back!`);
       return true;

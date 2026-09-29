@@ -6,6 +6,7 @@ import "./Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -17,9 +18,15 @@ function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await auth.login(email, password);
-    if (success) {
-      navigate("/profile");
+    if (submitting) return;
+    setSubmitting(true);
+    try {
+      const success = await auth.login(email, password);
+      if (success) {
+        navigate("/profile");
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -50,8 +57,8 @@ function Login() {
           />
         </div>
 
-        <button type="submit" className="login-btn hover-lift">
-          Login
+        <button type="submit" className="login-btn hover-lift" disabled={submitting}>
+          {submitting ? "Logging in…" : "Login"}
         </button>
       </form>
     </div>

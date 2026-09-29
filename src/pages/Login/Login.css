@@ -93,6 +93,13 @@ body.dark-mode .login-input {
   transform: scale(0.97);
 }
 
+.login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-md);
+}
+
 .login-input::placeholder {
   color: #777; 
   opacity: 0.7;
