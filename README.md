@@ -76,13 +76,14 @@ This project is a frontend application that interacts with a separate backend AP
 
 1.  **Prerequisites**:
     *   Node.js (LTS recommended)
-    *   A backend API running and accessible (e.g., at `http://localhost:3000`). This repository **does not** include the backend code.
+    *   A backend API running and accessible (e.g., at `http://localhost:3001`). This repository **does not** include the backend code.
 
 2.  **Environment Variables**:
     *   Create a `.env` file in the project root based on `.env.example`:
         ```
-        VITE_API_URL=https://devquiz-api-nblo.onrender.com  # Your backend API URL
+        VITE_API_URL=http://localhost:3001  # Your backend API URL (defaults to this if unset)
         ```
+        *   To use the deployed backend instead: `VITE_API_URL=https://devquiz-api-nblo.onrender.com`
     *   Note: The Gemini API key lives on the **backend**, not in this frontend.
 
 3.  **Clone the repository**:

@@ -15,11 +15,6 @@ export default defineConfig({
               priority: 10,
             },
             {
-              name: 'state',
-              test: /node_modules[\\/](@reduxjs|react-redux|reselect|immer)/,
-              priority: 9,
-            },
-            {
               name: 'router',
               test: /node_modules[\\/]react-router/,
               priority: 8,
